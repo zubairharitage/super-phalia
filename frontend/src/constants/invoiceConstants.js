@@ -1,0 +1,3 @@
+export const ALL_BILL_REQUEST = "ALL_BILL_REQUEST";
+export const ALL_BILL_SUCCESS = "ALL_BILL_SUCCESS";
+export const ALL_BILL_FAIL = "ALL_BILL_FAIL";
