@@ -1,10 +1,14 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import invoiceReducer from "./reducers/invoiceReducer";
+import {
+  createInvoiceReducer,
+  getAllInvoiceReducer,
+} from "./reducers/invoiceReducer";
 
 const reducer = combineReducers({
-  invoices: invoiceReducer,
+  invoices: getAllInvoiceReducer,
+  createInvoice: createInvoiceReducer,
 });
 
 const midleware = [thunk];

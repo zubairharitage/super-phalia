@@ -21,12 +21,8 @@ export const createBill = async (req, res) => {
 // get All Bills
 export const getAllBills = async (req, res) => {
   try {
-    const resultPerPage = 5;
     const billCount = await model.countDocuments();
-    const apiFeatures = new ApiFeatures(model.find(), req.query)
-      .search()
-      .filter()
-      .pagination(resultPerPage);
+    const apiFeatures = new ApiFeatures(model.find(), req.query);
     const bills = await apiFeatures.query;
 
     return res.status(200).json({

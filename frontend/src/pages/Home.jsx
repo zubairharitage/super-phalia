@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -13,8 +14,12 @@ import {
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { createBill } from "../actions/invoiceAction";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { loading, error, bill } = useSelector((state) => state.createInvoice);
+
   const [invoice, setInvoice] = useState({
     invoiceNumber: "",
     name: "",
@@ -38,9 +43,24 @@ const Home = () => {
       };
     });
   };
+  const handleClick = () => {
+    dispatch(createBill(invoice));
+    setInvoice({
+      invoiceNumber: "",
+      name: "",
+      startingTime: "",
+      closingTime: "",
+      jobDescription: "",
+      equipmentType: "",
+      tripHours: "",
+      rate: "",
+      tax: "",
+      paid: false,
+    });
+  };
 
   return (
-    <div>
+    <>
       <Header />
       <Container maxWidth="sm" sx={{ marginBottom: "40px" }}>
         <Typography
@@ -146,6 +166,7 @@ const Home = () => {
           </FormControl>
           <Button
             variant="contained"
+            onClick={handleClick}
             sx={{
               width: "48%",
               margin: "5px",
@@ -158,7 +179,7 @@ const Home = () => {
         </Box>
       </Container>
       <Footer />
-    </div>
+    </>
   );
 };
 

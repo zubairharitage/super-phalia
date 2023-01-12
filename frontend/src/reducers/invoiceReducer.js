@@ -4,7 +4,7 @@ import {
   ALL_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
-const invoiceReducer = (state = { bills: [] }, action) => {
+export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
   switch (action.type) {
     case ALL_BILL_REQUEST:
       return {
@@ -27,4 +27,23 @@ const invoiceReducer = (state = { bills: [] }, action) => {
   }
 };
 
-export default invoiceReducer;
+export const createInvoiceReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ALL_BILL_REQUEST:
+      return {
+        loading: true,
+      };
+    case ALL_BILL_SUCCESS:
+      return {
+        loading: false,
+        bill: action.payload.bill,
+      };
+    case ALL_BILL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
