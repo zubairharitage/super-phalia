@@ -2,6 +2,12 @@ import {
   ALL_BILL_REQUEST,
   ALL_BILL_SUCCESS,
   ALL_BILL_FAIL,
+  CREATE_BILL_REQUEST,
+  CREATE_BILL_SUCCESS,
+  CREATE_BILL_FAIL,
+  DELETE_BILL_REQUEST,
+  DELETE_BILL_SUCCESS,
+  DELETE_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
@@ -29,16 +35,37 @@ export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
 
 export const createInvoiceReducer = (state = {}, action) => {
   switch (action.type) {
-    case ALL_BILL_REQUEST:
+    case CREATE_BILL_REQUEST:
       return {
         loading: true,
       };
-    case ALL_BILL_SUCCESS:
+    case CREATE_BILL_SUCCESS:
       return {
         loading: false,
         bill: action.payload.bill,
       };
-    case ALL_BILL_FAIL:
+    case CREATE_BILL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const deleteInvoiceReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_BILL_REQUEST:
+      return {
+        loading: true,
+      };
+    case DELETE_BILL_SUCCESS:
+      return {
+        loading: false,
+        bill: action.payload.message,
+      };
+    case DELETE_BILL_FAIL:
       return {
         loading: false,
         error: action.payload,

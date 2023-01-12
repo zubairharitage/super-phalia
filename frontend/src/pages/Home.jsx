@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
@@ -14,7 +14,7 @@ import {
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { createBill } from "../actions/invoiceAction";
+import { createBillAction } from "../actions/invoiceAction";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const Home = () => {
     });
   };
   const handleClick = () => {
-    dispatch(createBill(invoice));
+    dispatch(createBillAction(invoice));
     setInvoice({
       invoiceNumber: "",
       name: "",

@@ -7,9 +7,12 @@ import {
   CREATE_BILL_REQUEST,
   CREATE_BILL_SUCCESS,
   CREATE_BILL_FAIL,
+  DELETE_BILL_REQUEST,
+  DELETE_BILL_SUCCESS,
+  DELETE_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
-export const getAllBills = () => async (dispatch) => {
+export const getAllBillsAction = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_BILL_REQUEST });
 
@@ -23,7 +26,7 @@ export const getAllBills = () => async (dispatch) => {
   }
 };
 
-export const createBill = (bill) => async (dispatch) => {
+export const createBillAction = (bill) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_BILL_REQUEST });
 
@@ -34,5 +37,19 @@ export const createBill = (bill) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: CREATE_BILL_FAIL, payload: error.responce.data.messsage });
+  }
+};
+
+export const deleteBillAction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_BILL_REQUEST });
+
+    const { data } = await axios.delete(`/phalia/api/v1/bill/${id}`);
+    dispatch({
+      type: DELETE_BILL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({ type: DELETE_BILL_FAIL, payload: error.responce.data.messsage });
   }
 };
