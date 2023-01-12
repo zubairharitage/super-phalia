@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -15,6 +25,7 @@ const Home = () => {
     tripHours: "",
     rate: "",
     tax: "",
+    paid: false,
   });
 
   const handleChange = (e) => {
@@ -46,6 +57,7 @@ const Home = () => {
             value={invoice.invoiceNumber}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
+            required
           />
           <TextField
             placeholder="Enter Name"
@@ -54,6 +66,7 @@ const Home = () => {
             value={invoice.name}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
+            required
           />
           <TextField
             placeholder="Enter Starting time"
@@ -62,6 +75,7 @@ const Home = () => {
             value={invoice.startingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Closing time"
@@ -70,6 +84,7 @@ const Home = () => {
             value={invoice.closingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Job Description"
@@ -78,6 +93,7 @@ const Home = () => {
             value={invoice.jobDescription}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Equipment Type"
@@ -86,6 +102,7 @@ const Home = () => {
             value={invoice.equipmentType}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Trip Hours"
@@ -94,6 +111,7 @@ const Home = () => {
             value={invoice.tripHours}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Rate"
@@ -102,6 +120,7 @@ const Home = () => {
             value={invoice.rate}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Tax"
@@ -111,6 +130,20 @@ const Home = () => {
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
+          <FormControl sx={{ width: "48%", margin: "5px" }} required>
+            <InputLabel id="demo-simple-select-label">select</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="paid"
+              value={invoice.paid}
+              onChange={handleChange}
+              name="paid"
+            >
+              <MenuItem value={true}>paid</MenuItem>
+              <MenuItem value={false}>unpaid</MenuItem>
+            </Select>
+          </FormControl>
           <Button
             variant="contained"
             sx={{
