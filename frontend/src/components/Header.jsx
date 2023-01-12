@@ -18,7 +18,7 @@ const Header = () => {
           variant={"h5"}
           component="h4"
         >
-          Phalia
+          SUPER PHALIA
         </Typography>
       </Link>
       <Box>

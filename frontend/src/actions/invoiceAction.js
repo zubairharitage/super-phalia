@@ -10,7 +10,7 @@ export const getAllBills = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_BILL_REQUEST });
 
-    const { data } = await axios.get("/api/v1/bills");
+    const { data } = await axios.get("/phalia/api/v1/bills");
     dispatch({
       type: ALL_BILL_SUCCESS,
       payload: data,

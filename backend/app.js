@@ -6,6 +6,6 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/v1", route);
+app.use("/phalia/api/v1", route);
 
 export default app;

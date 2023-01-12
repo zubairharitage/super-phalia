@@ -15,7 +15,7 @@ const invoiceReducer = (state = { bills: [] }, action) => {
       return {
         loading: false,
         bills: action.payload.bills,
-        billsCount: action.payload.billsCount,
+        billCount: action.payload.billCount,
       };
     case ALL_BILL_FAIL:
       return {

@@ -38,6 +38,10 @@ const invoiceSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  paid: {
+    type: Boolean,
+    required: [true, "Please Select paid or unpaid"],
+  },
   date: {
     type: Date,
     default: Date.now,
