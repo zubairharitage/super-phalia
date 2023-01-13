@@ -15,6 +15,8 @@ import {
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { createBillAction } from "../actions/invoiceAction";
+import SuccessMessage from "../components/SuccessMessage";
+import ErrorMessage from "../components/ErrorMessage";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -69,6 +71,13 @@ const Home = () => {
         >
           Create Invoice
         </Typography>
+        {bill ? (
+          <SuccessMessage />
+        ) : <div></div> && error ? (
+          <ErrorMessage error={error} />
+        ) : (
+          <div></div>
+        )}
         <Box>
           <TextField
             placeholder="Enter Invoice Number"

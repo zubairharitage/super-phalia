@@ -25,7 +25,10 @@ export const getAllBillsAction = () => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({ type: ALL_BILL_FAIL, payload: error.responce.data.messsage });
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: ALL_BILL_FAIL, payload: errorMessage.messsage });
   }
 };
 
@@ -39,7 +42,10 @@ export const createBillAction = (bill) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({ type: CREATE_BILL_FAIL, payload: error.responce.data.messsage });
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: CREATE_BILL_FAIL, payload: errorMessage });
   }
 };
 
@@ -53,7 +59,10 @@ export const deleteBillAction = (id) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({ type: DELETE_BILL_FAIL, payload: error.responce.data.messsage });
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: DELETE_BILL_FAIL, payload: errorMessage });
   }
 };
 
@@ -67,6 +76,9 @@ export const billDetailAction = (id) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({ type: DETAIL_BILL_FAIL, payload: error.responce.data.messsage });
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: DETAIL_BILL_FAIL, payload: errorMessage });
   }
 };

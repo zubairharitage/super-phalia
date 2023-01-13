@@ -13,11 +13,15 @@ const BillDetailScreen = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { loading, error, bill } = useSelector((state) => state.InvoiceDetail);
+  const { error, bill } = useSelector((state) => state.InvoiceDetail);
 
   useEffect(() => {
     dispatch(billDetailAction(id));
   }, [dispatch]);
+  let loading = true;
+  if (bill) {
+    loading = false;
+  }
 
   return (
     <>

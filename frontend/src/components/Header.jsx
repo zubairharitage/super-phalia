@@ -24,7 +24,7 @@ const Header = () => {
       <Box>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Button sx={{ mr: "3px", color: "white", fontWeight: "600" }}>
-            Home
+            Create Invoice
           </Button>
         </Link>
         <Link to="/all" style={{ textDecoration: "none" }}>

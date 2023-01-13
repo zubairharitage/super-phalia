@@ -1,7 +1,7 @@
 import React from "react";
 
 const BillDetails = ({ bill }) => {
-  return <>{bill.name}</>;
+  return <div>{bill.name}</div>;
 };
 
 export default BillDetails;
