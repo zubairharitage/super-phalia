@@ -22,7 +22,7 @@ const UnPaidScreen = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
         {loading ? (
           <Loading />
         ) : (

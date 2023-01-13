@@ -5,12 +5,14 @@ import {
   createInvoiceReducer,
   deleteInvoiceReducer,
   getAllInvoiceReducer,
+  invoiceDetailReducer,
 } from "./reducers/invoiceReducer";
 
 const reducer = combineReducers({
   invoices: getAllInvoiceReducer,
   createInvoice: createInvoiceReducer,
   deleteInvoice: deleteInvoiceReducer,
+  InvoiceDetail: invoiceDetailReducer,
 });
 
 const midleware = [thunk];

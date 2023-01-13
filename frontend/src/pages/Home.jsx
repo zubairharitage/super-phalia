@@ -62,7 +62,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="sm" sx={{ marginBottom: "40px" }}>
+      <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
         <Typography
           variant="h5"
           sx={{ margin: "10px", fontWeight: "600", textAlign: "center" }}

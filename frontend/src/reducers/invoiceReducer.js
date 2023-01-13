@@ -8,6 +8,9 @@ import {
   DELETE_BILL_REQUEST,
   DELETE_BILL_SUCCESS,
   DELETE_BILL_FAIL,
+  DETAIL_BILL_REQUEST,
+  DETAIL_BILL_SUCCESS,
+  DETAIL_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
@@ -66,6 +69,27 @@ export const deleteInvoiceReducer = (state = {}, action) => {
         bill: action.payload.message,
       };
     case DELETE_BILL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const invoiceDetailReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DETAIL_BILL_REQUEST:
+      return {
+        loading: true,
+      };
+    case DETAIL_BILL_SUCCESS:
+      return {
+        loading: false,
+        bill: action.payload.bill,
+      };
+    case DETAIL_BILL_FAIL:
       return {
         loading: false,
         error: action.payload,
