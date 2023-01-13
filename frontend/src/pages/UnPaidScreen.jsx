@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import { getAllBillsAction } from "../actions/invoiceAction";
 import BillPaper from "../components/BillPaper";
 import Loading from "../components/Loading";
+import Search from "../components/Search";
 
 const UnPaidScreen = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ const UnPaidScreen = () => {
     dispatch(getAllBillsAction());
   }, [dispatch, reload]);
 
-  const unPaidBills = bills.filter((bill) => bill.paid !== true);
   return (
     <>
       <Header />
@@ -26,9 +26,10 @@ const UnPaidScreen = () => {
         {loading ? (
           <Loading />
         ) : (
-          unPaidBills.map((bill) => (
-            <BillPaper bill={bill} setReload={setReload} key={bill._id} />
-          ))
+          <Search
+            bills={bills.filter((bill) => bill.paid !== true)}
+            setReload={setReload}
+          />
         )}
       </Container>
       <Footer />

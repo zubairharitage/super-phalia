@@ -7,18 +7,16 @@ import Header from "../components/Header";
 import { getAllBillsAction } from "../actions/invoiceAction";
 import BillPaper from "../components/BillPaper";
 import Loading from "../components/Loading";
+import Search from "../components/Search";
 
 const PaidScreen = () => {
   const dispatch = useDispatch();
-  const { loading, error, bills, billCount } = useSelector(
-    (state) => state.invoices
-  );
+  const { loading, error, bills } = useSelector((state) => state.invoices);
   const [reload, setReload] = useState(0);
   useEffect(() => {
     dispatch(getAllBillsAction());
   }, [dispatch, reload]);
 
-  const paidBills = bills.filter((bill) => bill.paid === true);
   return (
     <>
       <Header />
@@ -26,9 +24,10 @@ const PaidScreen = () => {
         {loading ? (
           <Loading />
         ) : (
-          paidBills.map((bill) => (
-            <BillPaper bill={bill} setReload={setReload} key={bill._id} />
-          ))
+          <Search
+            bills={bills.filter((bill) => bill.paid === true)}
+            setReload={setReload}
+          />
         )}
       </Container>
       <Footer />
