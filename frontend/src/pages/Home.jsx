@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -14,16 +15,19 @@ import {
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { createBillAction } from "../actions/invoiceAction";
-import SuccessMessage from "../components/SuccessMessage";
+import { createBillAction, getAllBillsAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { loading, error, bill } = useSelector((state) => state.createInvoice);
+  const nevigate = useNavigate();
+  const { error, bill } = useSelector((state) => state.createInvoice);
+  const { loading, bills } = useSelector((state) => state.invoices);
+
+  const [billNumber, setBillNumber] = useState("");
+  const [reload, setReload] = useState(0);
 
   const [invoice, setInvoice] = useState({
-    invoiceNumber: "",
     name: "",
     startingTime: "",
     closingTime: "",
@@ -32,8 +36,18 @@ const Home = () => {
     tripHours: "",
     rate: "",
     tax: "",
+    trn: "",
+    cstPay: "",
+    discount: "",
+    date: `${new Date().getDate()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getFullYear()}`,
     paid: false,
   });
+
+  useEffect(() => {
+    dispatch(getAllBillsAction());
+  }, [reload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,11 +58,19 @@ const Home = () => {
         [name]: value,
       };
     });
+    if (bills.length !== 0) {
+      setBillNumber(bills[bills.length - 1].invoiceNumber + 1);
+    }
   };
+
   const handleClick = () => {
-    dispatch(createBillAction(invoice));
+    const invoiceForCreate = {
+      invoiceNumber: billNumber,
+      ...invoice,
+    };
+    dispatch(createBillAction(invoiceForCreate));
+
     setInvoice({
-      invoiceNumber: "",
       name: "",
       startingTime: "",
       closingTime: "",
@@ -57,10 +79,21 @@ const Home = () => {
       tripHours: "",
       rate: "",
       tax: "",
+      trn: "",
+      cstPay: "",
+      discount: "",
+      date: `${new Date().getDate()}-${
+        new Date().getMonth() + 1
+      }-${new Date().getFullYear()}`,
       paid: false,
     });
+    setBillNumber("");
+    setReload(Math.random());
   };
 
+  const handleShow = () => {
+    nevigate(`/billdetail/${bill._id}`);
+  };
   return (
     <>
       <Header />
@@ -71,23 +104,8 @@ const Home = () => {
         >
           Create Invoice
         </Typography>
-        {bill ? (
-          <SuccessMessage />
-        ) : <div></div> && error ? (
-          <ErrorMessage error={error} />
-        ) : (
-          <div></div>
-        )}
+        {error ? <ErrorMessage error={error} /> : <div></div>}
         <Box>
-          <TextField
-            placeholder="Enter Invoice Number"
-            label="Invoice Number"
-            name="invoiceNumber"
-            value={invoice.invoiceNumber}
-            onChange={handleChange}
-            sx={{ margin: "5px", width: "48%" }}
-            required
-          />
           <TextField
             placeholder="Enter Name"
             label="Name"
@@ -95,7 +113,13 @@ const Home = () => {
             value={invoice.name}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
-            required
+          />
+          <TextField
+            placeholder="Enter Invoice Number"
+            label="Invoice Number"
+            value={billNumber}
+            onChange={(e) => setBillNumber(e.target.value)}
+            sx={{ margin: "5px", width: "48%" }}
           />
           <TextField
             placeholder="Enter Starting time"
@@ -104,7 +128,6 @@ const Home = () => {
             value={invoice.startingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Closing time"
@@ -113,7 +136,6 @@ const Home = () => {
             value={invoice.closingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Job Description"
@@ -122,7 +144,6 @@ const Home = () => {
             value={invoice.jobDescription}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Equipment Type"
@@ -131,7 +152,6 @@ const Home = () => {
             value={invoice.equipmentType}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Trip Hours"
@@ -140,7 +160,6 @@ const Home = () => {
             value={invoice.tripHours}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Rate"
@@ -149,7 +168,6 @@ const Home = () => {
             value={invoice.rate}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            required
           />
           <TextField
             placeholder="Enter Tax"
@@ -159,7 +177,39 @@ const Home = () => {
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
-          <FormControl sx={{ width: "48%", margin: "5px" }} required>
+          <TextField
+            placeholder="Enter Customer TRN"
+            label="TRN"
+            name="trn"
+            value={invoice.trn}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <TextField
+            placeholder="Enter how much cst pay"
+            label="Pay"
+            name="cstPay"
+            value={invoice.cstPay}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <TextField
+            placeholder="Enter discount for cst"
+            label="Discount"
+            name="discount"
+            value={invoice.discount}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <TextField
+            placeholder="Enter Date"
+            label="Date"
+            name="date"
+            value={invoice.date}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <FormControl sx={{ width: "48%", margin: "5px" }}>
             <InputLabel id="demo-simple-select-label">select</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -185,6 +235,19 @@ const Home = () => {
           >
             Create Invoice
           </Button>
+          {bill && (
+            <Button
+              variant="outlined"
+              onClick={handleShow}
+              sx={{
+                width: "48%",
+                margin: "5px",
+                ":hover": { backgroundColor: "#05a5fb", color: "white" },
+              }}
+            >
+              Show bill
+            </Button>
+          )}
         </Box>
       </Container>
       <Footer />

@@ -13,11 +13,9 @@ const invoiceSchema = new mongoose.Schema({
   },
   startingTime: {
     type: String,
-    required: [true, "Please enter starting time"],
   },
   closingTime: {
     type: String,
-    required: [true, "Please enter closing time"],
   },
   jobDescription: {
     type: String,
@@ -36,15 +34,22 @@ const invoiceSchema = new mongoose.Schema({
   },
   tax: {
     type: Number,
-    default: 0,
+  },
+  trn: {
+    type: Number,
+  },
+  cstPay: {
+    type: Number,
+  },
+  discount: {
+    type: Number,
   },
   paid: {
     type: Boolean,
     required: [true, "Please Select paid or unpaid"],
   },
   date: {
-    type: Date,
-    default: Date.now,
+    type: String,
   },
 });
 

@@ -24,7 +24,8 @@ const BillDetails = ({ bill }) => {
           borderBottom: "1px dotted black",
         }}
       >
-        <Typography>Invoice Number: {bill.invoiceNumber}</Typography>
+        <Typography>No. {bill.invoiceNumber}</Typography>
+        <Typography>{bill.paid && "Paid"}</Typography>
         <Typography>Date: {bill.date.toString().slice(0, 10)}</Typography>
       </Box>
       <Box
@@ -36,7 +37,7 @@ const BillDetails = ({ bill }) => {
           borderBottom: "1px dotted black",
         }}
       >
-        <Typography>Name: {bill.name}</Typography>
+        <Typography>Company Name: {bill.name}</Typography>
         <Typography>Equipment Type: {bill.equipmentType}</Typography>
       </Box>
       <TableContainer>
