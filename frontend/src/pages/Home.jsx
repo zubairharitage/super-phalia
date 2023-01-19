@@ -35,7 +35,7 @@ const Home = () => {
     equipmentType: "",
     tripHours: "",
     rate: "",
-    tax: "",
+    tax: 0,
     trn: "",
     cstPay: "",
     discount: "",
@@ -79,7 +79,7 @@ const Home = () => {
       equipmentType: "",
       tripHours: "",
       rate: "",
-      tax: "",
+      tax: 0,
       trn: "",
       cstPay: "",
       discount: "",
@@ -170,14 +170,20 @@ const Home = () => {
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
-          <TextField
-            placeholder="Enter Tax"
-            label="Tax"
-            name="tax"
-            value={invoice.tax}
-            onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
-          />
+          <FormControl sx={{ width: "48%", margin: "5px" }}>
+            <InputLabel id="simple-select-label">Tax</InputLabel>
+            <Select
+              labelId="simple-select-label"
+              id="simple-select"
+              label="paid"
+              value={invoice.tax}
+              onChange={handleChange}
+              name="tax"
+            >
+              <MenuItem value={0}>No</MenuItem>
+              <MenuItem value={5}>Yes</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             placeholder="Enter Customer TRN"
             label="TRN"
