@@ -197,18 +197,20 @@ const BillDetails = ({ bill }) => {
         <Typography>Paid</Typography>
         <Typography>{bill.cstPay}</Typography>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: "15px",
-          borderBottom: "1px dotted black",
-        }}
-      >
-        <Typography>Left</Typography>
-        <Typography>{totalBill - bill.cstPay}</Typography>
-      </Box>
+      {!bill.paid && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "15px",
+            borderBottom: "1px dotted black",
+          }}
+        >
+          <Typography>Left</Typography>
+          <Typography>{totalBill - bill.cstPay}</Typography>
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",
