@@ -59,7 +59,9 @@ const Home = () => {
       };
     });
     if (bills.length !== 0) {
-      setBillNumber(bills[bills.length - 1].invoiceNumber + 1);
+      if (name === "name") {
+        setBillNumber(bills[bills.length - 1].invoiceNumber + 1);
+      }
     }
   };
 
@@ -69,7 +71,6 @@ const Home = () => {
       ...invoice,
     };
     dispatch(createBillAction(invoiceForCreate));
-
     setInvoice({
       name: "",
       startingTime: "",
