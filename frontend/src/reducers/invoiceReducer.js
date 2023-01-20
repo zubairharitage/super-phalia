@@ -11,6 +11,9 @@ import {
   DETAIL_BILL_REQUEST,
   DETAIL_BILL_SUCCESS,
   DETAIL_BILL_FAIL,
+  EDIT_BILL_REQUEST,
+  EDIT_BILL_SUCCESS,
+  EDIT_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
@@ -90,6 +93,27 @@ export const invoiceDetailReducer = (state = {}, action) => {
         bill: action.payload.bill,
       };
     case DETAIL_BILL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const invoiceEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case EDIT_BILL_REQUEST:
+      return {
+        loading: true,
+      };
+    case EDIT_BILL_SUCCESS:
+      return {
+        loading: false,
+        data: action.payload.bill,
+      };
+    case EDIT_BILL_FAIL:
       return {
         loading: false,
         error: action.payload,

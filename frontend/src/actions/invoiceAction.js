@@ -13,6 +13,9 @@ import {
   DETAIL_BILL_REQUEST,
   DETAIL_BILL_SUCCESS,
   DETAIL_BILL_FAIL,
+  EDIT_BILL_REQUEST,
+  EDIT_BILL_SUCCESS,
+  EDIT_BILL_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllBillsAction = () => async (dispatch) => {
@@ -80,5 +83,22 @@ export const billDetailAction = (id) => async (dispatch) => {
       ? error.response.data.message
       : error.message;
     dispatch({ type: DETAIL_BILL_FAIL, payload: errorMessage });
+  }
+};
+
+export const billEditAction = (id, bill) => async (dispatch) => {
+  try {
+    dispatch({ type: EDIT_BILL_REQUEST });
+
+    const { data } = await axios.put(`/phalia/api/v1/bill/${id}`, bill);
+    dispatch({
+      type: EDIT_BILL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: EDIT_BILL_FAIL, payload: errorMessage });
   }
 };
