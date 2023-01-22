@@ -20,7 +20,7 @@ const CreateBill = ({ preBill }) => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
 
-  const { error, bill } = useSelector((state) => state.createInvoice);
+  const { error } = useSelector((state) => state.createInvoice);
 
   const [invoice, setInvoice] = useState({
     name: preBill.name,
@@ -150,7 +150,7 @@ const CreateBill = ({ preBill }) => {
           </FormControl>
           <TextField
             placeholder="Enter Customer TRN"
-            label="TRN"
+            label="Customer TRN"
             name="trn"
             value={invoice.trn}
             onChange={handleChange}
@@ -158,40 +158,6 @@ const CreateBill = ({ preBill }) => {
             disabled
           />
 
-          <TextField
-            placeholder="Enter discount for cst"
-            label="Discount"
-            name="discount"
-            value={preBill.discount}
-            onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
-            disabled
-          />
-          <TextField
-            placeholder="Enter Date"
-            label="Date"
-            name="date"
-            value={invoice.date}
-            onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
-            disabled
-          />
-          <FormControl sx={{ width: "48%", margin: "5px" }}>
-            <InputLabel id="demo-simple-select-label">Bill</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="paid"
-              value={invoice.paid}
-              onChange={handleChange}
-              name="paid"
-              disabled
-            >
-              <MenuItem value={true}>paid</MenuItem>
-              <MenuItem value={false}>unpaid</MenuItem>
-            </Select>
-          </FormControl>
-          <Box></Box>
           <Button
             variant="contained"
             onClick={handleClick}

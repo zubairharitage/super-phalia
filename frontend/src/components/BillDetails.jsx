@@ -29,10 +29,18 @@ const BillDetails = ({ bill }) => {
   const [billl, setBilll] = useState(bill[0]);
   const [reload, setReload] = useState(false);
 
-  const totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
-  const discount = bill.reduce((sum, d) => sum + d.discount, 0);
-  const vat = (totalBil * billl.tax) / 100;
-  const totalBill = totalBil + vat - discount;
+  let discount;
+  let vat;
+  let totalBill;
+
+  try {
+    const totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
+    discount = bill.reduce((sum, d) => sum + d.discount, 0);
+    vat = (totalBil * billl.tax) / 100;
+    totalBill = totalBil + vat - discount;
+  } catch (err) {
+    window.location.reload(false);
+  }
 
   const handleClick = () => {
     const bil = {

@@ -8,6 +8,7 @@ import { billDetailAction, getAllBillsAction } from "../actions/invoiceAction";
 import Loading from "../components/Loading";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import ErrorMessage from "../components/ErrorMessage";
 
 const BillDetailScreen = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const BillDetailScreen = () => {
     <>
       <Header />
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
+        {error && <ErrorMessage />}
         {loading ? <Loading /> : <BillDetails bill={data} />}
       </Container>
       <Footer />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from "@mui/material";
 
@@ -10,11 +10,11 @@ import Search from "../components/Search";
 
 const AllBills = () => {
   const dispatch = useDispatch();
-  const { loading, error, bills } = useSelector((state) => state.invoices);
-  const [reload, setReload] = useState(0);
+  const { loading, bills } = useSelector((state) => state.invoices);
+
   useEffect(() => {
     dispatch(getAllBillsAction());
-  }, [dispatch, reload]);
+  }, [dispatch]);
 
   let data;
   if (!loading) {
@@ -25,7 +25,7 @@ const AllBills = () => {
     <>
       <Header />
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
-        {loading ? <Loading /> : <Search bills={data} setReload={setReload} />}
+        {loading ? <Loading /> : <Search bills={data} />}
       </Container>
       <Footer />
     </>

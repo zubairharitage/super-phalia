@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from "@mui/material";
 
@@ -10,11 +10,11 @@ import Search from "../components/Search";
 
 const UnPaidScreen = () => {
   const dispatch = useDispatch();
-  const { loading, error, bills } = useSelector((state) => state.invoices);
-  const [reload, setReload] = useState(0);
+  const { loading, bills } = useSelector((state) => state.invoices);
+
   useEffect(() => {
     dispatch(getAllBillsAction());
-  }, [dispatch, reload]);
+  }, [dispatch]);
 
   let data;
   if (!loading) {
@@ -28,10 +28,7 @@ const UnPaidScreen = () => {
         {loading ? (
           <Loading />
         ) : (
-          <Search
-            bills={data.filter((bill) => bill.paid !== true)}
-            setReload={setReload}
-          />
+          <Search bills={data.filter((bill) => bill.paid !== true)} />
         )}
       </Container>
       <Footer />
