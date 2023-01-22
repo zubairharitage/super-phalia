@@ -6,6 +6,7 @@ import AllBills from "./pages/AllBills";
 import PaidScreen from "./pages/PaidScreen";
 import UnPaidScreen from "./pages/UnPaidScreen";
 import BillDetailScreen from "./pages/BillDetailScreen";
+import CreateBillScreen from "./pages/CreateBillScreen";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/paid" element={<PaidScreen />} />
         <Route path="/unpaid" element={<UnPaidScreen />} />
         <Route path="/billdetail/:id" element={<BillDetailScreen />} />
+        <Route path="/addbill/:id" element={<CreateBillScreen />} />
       </Routes>
     </>
   );

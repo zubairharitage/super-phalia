@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useNavigate } from "react-router-dom";
 
 import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
@@ -22,6 +23,7 @@ import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
 const BillDetails = ({ bill }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const nevigate = useNavigate();
   const { data } = useSelector((state) => state.editInvoice);
 
   const [billl, setBilll] = useState(bill[0]);
@@ -45,7 +47,12 @@ const BillDetails = ({ bill }) => {
   };
   const handleDelete = (bill) => {
     bill.map((b) => dispatch(deleteBillAction(b._id)));
+    nevigate(`/`);
   };
+  const handleAddBill = () => {
+    nevigate(`/addbill/${id}`);
+  };
+
   return (
     <Box>
       <Paper
@@ -54,19 +61,31 @@ const BillDetails = ({ bill }) => {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px",
-          margin: "10px",
+          margin: "5px 0",
           backgroundColor: "#0081C9",
         }}
       >
         <Button
           variant="contained"
           startIcon={<AddIcon />}
+          onClick={handleAddBill}
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
           }}
         >
           Add Bill
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<WhatsAppIcon />}
+          onClick={() => handleDelete(bill)}
+          sx={{
+            backgroundColor: "#0081C9",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Share
         </Button>
         <Button
           variant="contained"
@@ -87,7 +106,7 @@ const BillDetails = ({ bill }) => {
             alignItems: "center",
             justifyContent: "space-between",
             padding: "10px",
-            margin: "10px",
+            margin: "5px 0",
           }}
         >
           <Typography>{reload ? "" : "Bill is Not Paid"}</Typography>
@@ -222,9 +241,11 @@ const BillDetails = ({ bill }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bill.map((b) => (
+              {bill.map((b, index) => (
                 <TableRow sx={{ border: "2px solid black" }} key={b._id}>
-                  <TableCell sx={{ border: "2px solid black" }}>1</TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {index + 1}
+                  </TableCell>
                   <TableCell sx={{ border: "2px solid black" }}>
                     {b.startingTime}
                   </TableCell>

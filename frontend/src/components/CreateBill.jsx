@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,41 +13,31 @@ import {
   Typography,
 } from "@mui/material";
 
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { createBillAction, getAllBillsAction } from "../actions/invoiceAction";
+import { createBillAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
 
-const Home = () => {
+const CreateBill = ({ preBill }) => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
-  const { error, bill } = useSelector((state) => state.createInvoice);
-  const { bills } = useSelector((state) => state.invoices);
 
-  const [billNumber, setBillNumber] = useState("");
-  const [reload, setReload] = useState(0);
+  const { error, bill } = useSelector((state) => state.createInvoice);
 
   const [invoice, setInvoice] = useState({
-    name: "",
+    name: preBill.name,
+    invoiceNumber: preBill.invoiceNumber,
     startingTime: "",
     closingTime: "",
     jobDescription: "",
-    equipmentType: "",
+    equipmentType: preBill.equipmentType,
     tripHours: "",
     rate: "",
-    tax: 0,
-    trn: 0,
+    tax: preBill.tax,
+    trn: preBill.trn,
     left: 0,
     discount: 0,
-    date: `${new Date().getDate()}-${
-      new Date().getMonth() + 1
-    }-${new Date().getFullYear()}`,
-    paid: false,
+    date: preBill.date,
+    paid: true,
   });
-
-  useEffect(() => {
-    dispatch(getAllBillsAction());
-  }, [dispatch, reload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,52 +48,21 @@ const Home = () => {
         [name]: value,
       };
     });
-    if (bills.length !== 0) {
-      if (name === "name") {
-        setBillNumber(bills[bills.length - 1].invoiceNumber + 1);
-      }
-    }
   };
 
   const handleClick = () => {
-    const invoiceForCreate = {
-      invoiceNumber: billNumber,
-      ...invoice,
-    };
-    dispatch(createBillAction(invoiceForCreate));
-    setInvoice({
-      name: "",
-      startingTime: "",
-      closingTime: "",
-      jobDescription: "",
-      equipmentType: "",
-      tripHours: "",
-      rate: "",
-      tax: 0,
-      trn: 0,
-      left: 0,
-      discount: 0,
-      date: `${new Date().getDate()}-${
-        new Date().getMonth() + 1
-      }-${new Date().getFullYear()}`,
-      paid: false,
-    });
-    setBillNumber("");
-    setReload(Math.random());
+    dispatch(createBillAction(invoice));
+    nevigate(`/billdetail/${preBill._id}`);
   };
 
-  const handleShow = () => {
-    nevigate(`/billdetail/${bill._id}`);
-  };
   return (
     <>
-      <Header />
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
         <Typography
           variant="h5"
           sx={{ margin: "10px", fontWeight: "600", textAlign: "center" }}
         >
-          Create Invoice
+          Add Bill
         </Typography>
         {error ? <ErrorMessage error={error} /> : <div></div>}
         <Box>
@@ -114,13 +73,16 @@ const Home = () => {
             value={invoice.name}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
+            disabled
           />
           <TextField
             placeholder="Enter Invoice Number"
             label="Invoice Number"
-            value={billNumber}
-            onChange={(e) => setBillNumber(e.target.value)}
+            name="invoiceNumber"
+            value={invoice.invoiceNumber}
+            onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
+            disabled
           />
           <TextField
             placeholder="Enter Starting time"
@@ -153,6 +115,7 @@ const Home = () => {
             value={invoice.equipmentType}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            disabled
           />
           <TextField
             placeholder="Enter Trip Hours"
@@ -179,6 +142,7 @@ const Home = () => {
               value={invoice.tax}
               onChange={handleChange}
               name="tax"
+              disabled
             >
               <MenuItem value={0}>No</MenuItem>
               <MenuItem value={5}>Yes</MenuItem>
@@ -191,15 +155,17 @@ const Home = () => {
             value={invoice.trn}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            disabled
           />
 
           <TextField
             placeholder="Enter discount for cst"
             label="Discount"
             name="discount"
-            value={invoice.discount}
+            value={preBill.discount}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            disabled
           />
           <TextField
             placeholder="Enter Date"
@@ -208,9 +174,10 @@ const Home = () => {
             value={invoice.date}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            disabled
           />
           <FormControl sx={{ width: "48%", margin: "5px" }}>
-            <InputLabel id="demo-simple-select-label">select</InputLabel>
+            <InputLabel id="demo-simple-select-label">Bill</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -218,23 +185,13 @@ const Home = () => {
               value={invoice.paid}
               onChange={handleChange}
               name="paid"
+              disabled
             >
               <MenuItem value={true}>paid</MenuItem>
               <MenuItem value={false}>unpaid</MenuItem>
             </Select>
           </FormControl>
-          {!invoice.paid ? (
-            <TextField
-              placeholder="Enter how much Left"
-              label="Left"
-              name="left"
-              value={invoice.left}
-              onChange={handleChange}
-              sx={{ width: "48%", margin: "5px" }}
-            />
-          ) : (
-            <Box></Box>
-          )}
+          <Box></Box>
           <Button
             variant="contained"
             onClick={handleClick}
@@ -245,26 +202,12 @@ const Home = () => {
               ":hover": { backgroundColor: "#05a5fb" },
             }}
           >
-            Create Invoice
+            Add Bill
           </Button>
-          {bill && (
-            <Button
-              variant="outlined"
-              onClick={handleShow}
-              sx={{
-                width: "48%",
-                margin: "5px",
-                ":hover": { backgroundColor: "#05a5fb", color: "white" },
-              }}
-            >
-              Show bill
-            </Button>
-          )}
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };
 
-export default Home;
+export default CreateBill;
