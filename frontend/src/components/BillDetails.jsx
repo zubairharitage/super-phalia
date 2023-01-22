@@ -13,31 +13,29 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
-import { billEditAction } from "../actions/invoiceAction";
+import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
 
 const BillDetails = ({ bill }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.editInvoice);
 
-  const [billl, setBilll] = useState(bill);
+  const [billl, setBilll] = useState(bill[0]);
   const [reload, setReload] = useState(false);
 
-  const amountAED = billl.tripHours * billl.rate;
-  let vat;
-  if (billl.tax === 0) {
-    vat = amountAED * 0;
-  }
-  if (billl.tax === 5) {
-    vat = amountAED * 0.05;
-  }
-  const discount = billl.discount;
-  const totalBill = amountAED + vat - discount;
+  const totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
+  const discount = bill.reduce((sum, d) => sum + d.discount, 0);
+  const vat = (totalBil * billl.tax) / 100;
+  const totalBill = totalBil + vat - discount;
+
   const handleClick = () => {
     const bil = {
       paid: true,
-      cstPay: totalBill,
+      left: 0,
     };
     dispatch(billEditAction(id, bil));
     setReload(true);
@@ -45,8 +43,43 @@ const BillDetails = ({ bill }) => {
   const handleReload = () => {
     setBilll(data);
   };
+  const handleDelete = (bill) => {
+    bill.map((b) => dispatch(deleteBillAction(b._id)));
+  };
   return (
     <Box>
+      <Paper
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px",
+          margin: "10px",
+          backgroundColor: "#0081C9",
+        }}
+      >
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          sx={{
+            backgroundColor: "#0081C9",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Add Bill
+        </Button>
+        <Button
+          variant="contained"
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDelete(bill)}
+          sx={{
+            backgroundColor: "#0081C9",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Delete Bill
+        </Button>
+      </Paper>
       {!billl.paid && (
         <Paper
           sx={{
@@ -189,27 +222,29 @@ const BillDetails = ({ bill }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow sx={{ border: "2px solid black" }}>
-                <TableCell sx={{ border: "2px solid black" }}>1</TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {billl.startingTime}
-                </TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {billl.closingTime}
-                </TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {billl.jobDescription}
-                </TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {billl.tripHours}
-                </TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {billl.rate}
-                </TableCell>
-                <TableCell sx={{ border: "2px solid black" }}>
-                  {amountAED}
-                </TableCell>
-              </TableRow>
+              {bill.map((b) => (
+                <TableRow sx={{ border: "2px solid black" }} key={b._id}>
+                  <TableCell sx={{ border: "2px solid black" }}>1</TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.startingTime}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.closingTime}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.jobDescription}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.tripHours}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.rate}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid black" }}>
+                    {b.tripHours * b.rate}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
@@ -249,18 +284,7 @@ const BillDetails = ({ bill }) => {
           <Typography>Total Bill</Typography>
           <Typography>{totalBill}</Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: "15px",
-            borderBottom: "1px dotted black",
-          }}
-        >
-          <Typography>Paid</Typography>
-          <Typography>{billl.cstPay}</Typography>
-        </Box>
+
         {!billl.paid && (
           <Box
             sx={{
@@ -272,7 +296,7 @@ const BillDetails = ({ bill }) => {
             }}
           >
             <Typography>Left</Typography>
-            <Typography>{totalBill - billl.cstPay}</Typography>
+            <Typography>{billl.left === 0 ? totalBill : billl.left}</Typography>
           </Box>
         )}
         <Box

@@ -22,7 +22,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
   const { error, bill } = useSelector((state) => state.createInvoice);
-  const { loading, bills } = useSelector((state) => state.invoices);
+  const { bills } = useSelector((state) => state.invoices);
 
   const [billNumber, setBillNumber] = useState("");
   const [reload, setReload] = useState(0);
@@ -37,8 +37,8 @@ const Home = () => {
     rate: "",
     tax: 0,
     trn: "",
-    cstPay: "",
-    discount: "",
+    left: 0,
+    discount: 0,
     date: `${new Date().getDate()}-${
       new Date().getMonth() + 1
     }-${new Date().getFullYear()}`,
@@ -47,7 +47,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllBillsAction());
-  }, [reload]);
+  }, [dispatch, reload]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,8 +81,8 @@ const Home = () => {
       rate: "",
       tax: 0,
       trn: "",
-      cstPay: "",
-      discount: "",
+      left: 0,
+      discount: 0,
       date: `${new Date().getDate()}-${
         new Date().getMonth() + 1
       }-${new Date().getFullYear()}`,
@@ -192,14 +192,7 @@ const Home = () => {
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
-          <TextField
-            placeholder="Enter how much cst pay"
-            label="Pay"
-            name="cstPay"
-            value={invoice.cstPay}
-            onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
-          />
+
           <TextField
             placeholder="Enter discount for cst"
             label="Discount"
@@ -230,6 +223,18 @@ const Home = () => {
               <MenuItem value={false}>unpaid</MenuItem>
             </Select>
           </FormControl>
+          {!invoice.paid ? (
+            <TextField
+              placeholder="Enter how much Left"
+              label="Left"
+              name="left"
+              value={invoice.left}
+              onChange={handleChange}
+              sx={{ width: "48%", margin: "5px" }}
+            />
+          ) : (
+            <Box></Box>
+          )}
           <Button
             variant="contained"
             onClick={handleClick}

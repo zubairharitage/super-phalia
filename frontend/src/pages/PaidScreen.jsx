@@ -5,7 +5,6 @@ import { Container } from "@mui/material";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getAllBillsAction } from "../actions/invoiceAction";
-import BillPaper from "../components/BillPaper";
 import Loading from "../components/Loading";
 import Search from "../components/Search";
 
@@ -17,6 +16,11 @@ const PaidScreen = () => {
     dispatch(getAllBillsAction());
   }, [dispatch, reload]);
 
+  let data;
+  if (!loading) {
+    data = [...new Map(bills.map((b) => [b.invoiceNumber, b])).values()];
+  }
+
   return (
     <>
       <Header />
@@ -25,7 +29,7 @@ const PaidScreen = () => {
           <Loading />
         ) : (
           <Search
-            bills={bills.filter((bill) => bill.paid === true)}
+            bills={data.filter((bill) => bill.paid === true)}
             setReload={setReload}
           />
         )}

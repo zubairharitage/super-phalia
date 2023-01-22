@@ -39,7 +39,7 @@ const invoiceSchema = new mongoose.Schema({
   trn: {
     type: Number,
   },
-  cstPay: {
+  left: {
     type: Number,
   },
   discount: {

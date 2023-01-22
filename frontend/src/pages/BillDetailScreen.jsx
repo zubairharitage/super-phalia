@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import BillDetails from "../components/BillDetails";
-import { billDetailAction } from "../actions/invoiceAction";
+import { billDetailAction, getAllBillsAction } from "../actions/invoiceAction";
 import Loading from "../components/Loading";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -13,21 +13,25 @@ const BillDetailScreen = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const { bills } = useSelector((state) => state.invoices);
   const { error, bill } = useSelector((state) => state.InvoiceDetail);
 
   useEffect(() => {
+    dispatch(getAllBillsAction());
     dispatch(billDetailAction(id));
   }, [dispatch]);
   let loading = true;
-  if (bill) {
+  let data;
+  if (bills.length !== 0 && bill) {
     loading = false;
+    data = bills.filter((b) => b.invoiceNumber === bill.invoiceNumber);
   }
 
   return (
     <>
       <Header />
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
-        {loading ? <Loading /> : <BillDetails bill={bill} />}
+        {loading ? <Loading /> : <BillDetails bill={data} />}
       </Container>
       <Footer />
     </>
