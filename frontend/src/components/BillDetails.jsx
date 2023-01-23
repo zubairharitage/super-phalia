@@ -11,6 +11,11 @@ import {
   TableRow,
   Typography,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -29,6 +34,7 @@ const BillDetails = ({ bill }) => {
 
   const [billl, setBilll] = useState(bill[0]);
   const [reload, setReload] = useState(false);
+  const [open, setOpen] = useState(false);
 
   let discount;
   let vat;
@@ -75,6 +81,14 @@ const BillDetails = ({ bill }) => {
     document.body.removeChild(link);
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box>
       <Paper
@@ -115,7 +129,7 @@ const BillDetails = ({ bill }) => {
         <Button
           variant="contained"
           startIcon={<DeleteIcon />}
-          onClick={() => handleDelete(bill)}
+          onClick={handleClickOpen}
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
@@ -123,6 +137,25 @@ const BillDetails = ({ bill }) => {
         >
           Delete Bill
         </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you Sure?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>No</Button>
+            <Button onClick={() => handleDelete(bill)} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
       {!billl.paid && (
         <Paper
