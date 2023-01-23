@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import html2canvas from "html2canvas";
 import {
   Box,
   Paper,
@@ -15,8 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import PrintIcon from "@mui/icons-material/Print";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useNavigate } from "react-router-dom";
 
 import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
@@ -61,6 +61,19 @@ const BillDetails = ({ bill }) => {
   const handleAddBill = () => {
     nevigate(`/addbill/${id}`);
   };
+  const handleDownload = async () => {
+    const element = document.getElementById("billPaper"),
+      canvas = await html2canvas(element),
+      data = canvas.toDataURL("image/jpg"),
+      link = document.createElement("a");
+
+    link.href = data;
+    link.download = `${billl.name}-${billl.invoiceNumber}.jpg`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <Box>
@@ -85,33 +98,20 @@ const BillDetails = ({ bill }) => {
         >
           Add Bill
         </Button>
-        <Box>
-          <Button
-            variant="contained"
-            size="small"
-            startIcon={<WhatsAppIcon />}
-            onClick={() => handleDelete(bill)}
-            sx={{
-              backgroundColor: "#0081C9",
-              mr: "2px",
-              ":hover": { backgroundColor: "#05a5fb" },
-            }}
-          >
-            Share
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            startIcon={<PrintIcon />}
-            onClick={() => handleDelete(bill)}
-            sx={{
-              backgroundColor: "#0081C9",
-              ":hover": { backgroundColor: "#05a5fb" },
-            }}
-          >
-            Print
-          </Button>
-        </Box>
+        <Button
+          variant="contained"
+          size="small"
+          startIcon={<DownloadIcon />}
+          onClick={handleDownload}
+          sx={{
+            backgroundColor: "#0081C9",
+            mr: "2px",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Download
+        </Button>
+
         <Button
           variant="contained"
           startIcon={<DeleteIcon />}
@@ -162,6 +162,7 @@ const BillDetails = ({ bill }) => {
       )}
       <Paper
         elevation={4}
+        id="billPaper"
         sx={{ mt: "10px", padding: "5px", width: "100%", overflow: "hidden" }}
       >
         <Box

@@ -13,7 +13,7 @@ const CreateBillScreen = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { error, bill } = useSelector((state) => state.InvoiceDetail);
+  const { bill } = useSelector((state) => state.InvoiceDetail);
 
   useEffect(() => {
     dispatch(billDetailAction(id));

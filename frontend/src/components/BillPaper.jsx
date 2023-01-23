@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button, Paper } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 
 const BillPaper = ({ bill }) => {

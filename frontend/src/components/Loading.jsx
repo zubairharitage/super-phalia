@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ClipLoader, CircleLoader, ClockLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 const Loading = () => {
   return (
