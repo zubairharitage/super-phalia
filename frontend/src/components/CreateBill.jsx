@@ -15,12 +15,13 @@ import {
 
 import { createBillAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
+import SuccessMessage from "../components/SuccessMessage";
 
 const CreateBill = ({ preBill }) => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
 
-  const { error } = useSelector((state) => state.createInvoice);
+  const { error, bill } = useSelector((state) => state.createInvoice);
 
   const [invoice, setInvoice] = useState({
     name: preBill.name,
@@ -52,6 +53,9 @@ const CreateBill = ({ preBill }) => {
 
   const handleClick = () => {
     dispatch(createBillAction(invoice));
+  };
+
+  const handleShow = () => {
     nevigate(`/billdetail/${preBill._id}`);
   };
 
@@ -170,7 +174,21 @@ const CreateBill = ({ preBill }) => {
           >
             Add Bill
           </Button>
+          {bill && (
+            <Button
+              variant="outlined"
+              onClick={handleShow}
+              sx={{
+                width: "48%",
+                margin: "5px",
+                ":hover": { backgroundColor: "#05a5fb", color: "white" },
+              }}
+            >
+              Show bill
+            </Button>
+          )}
         </Box>
+        {bill && <SuccessMessage />}
       </Container>
     </>
   );

@@ -6,7 +6,7 @@ const SuccessMessage = () => {
     <Box sx={{ margin: "5px" }}>
       <Alert severity="success">
         <AlertTitle>Created</AlertTitle>
-        Invoice Created <strong>Successfully</strong>
+        Bill Added <strong>Successfully</strong>
       </Alert>
     </Box>
   );

@@ -125,7 +125,6 @@ const BillDetails = ({ bill }) => {
         >
           Download
         </Button>
-
         <Button
           variant="contained"
           startIcon={<DeleteIcon />}
@@ -146,12 +145,12 @@ const BillDetails = ({ bill }) => {
           <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you Sure?
+              {`Are you Sure want to Delete the Bill of ${billl.name}?`}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>No</Button>
-            <Button onClick={() => handleDelete(bill)} autoFocus>
+            <Button color="error" onClick={() => handleDelete(bill)} autoFocus>
               Yes
             </Button>
           </DialogActions>
