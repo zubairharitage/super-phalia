@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PrintIcon from "@mui/icons-material/Print";
 import { useNavigate } from "react-router-dom";
 
 import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
@@ -84,17 +85,33 @@ const BillDetails = ({ bill }) => {
         >
           Add Bill
         </Button>
-        <Button
-          variant="contained"
-          startIcon={<WhatsAppIcon />}
-          onClick={() => handleDelete(bill)}
-          sx={{
-            backgroundColor: "#0081C9",
-            ":hover": { backgroundColor: "#05a5fb" },
-          }}
-        >
-          Share
-        </Button>
+        <Box>
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<WhatsAppIcon />}
+            onClick={() => handleDelete(bill)}
+            sx={{
+              backgroundColor: "#0081C9",
+              mr: "2px",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
+            Share
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            startIcon={<PrintIcon />}
+            onClick={() => handleDelete(bill)}
+            sx={{
+              backgroundColor: "#0081C9",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
+            Print
+          </Button>
+        </Box>
         <Button
           variant="contained"
           startIcon={<DeleteIcon />}
