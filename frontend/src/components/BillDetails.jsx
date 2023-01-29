@@ -21,10 +21,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import DownloadIcon from "@mui/icons-material/Download";
 import { useNavigate } from "react-router-dom";
 
-import { billEditAction, deleteBillAction } from "../actions/invoiceAction";
+import { deleteBillAction } from "../actions/invoiceAction";
 
 const BillDetails = ({ bill }) => {
   const { id } = useParams();
@@ -33,33 +34,21 @@ const BillDetails = ({ bill }) => {
   const { data } = useSelector((state) => state.editInvoice);
 
   const [billl, setBilll] = useState(bill[0]);
-  const [reload, setReload] = useState(false);
   const [open, setOpen] = useState(false);
 
   let discount;
   let vat;
   let totalBill;
+  let totalBil;
 
   try {
-    const totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
+    totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
     discount = bill.reduce((sum, d) => sum + d.discount, 0);
     vat = (totalBil * billl.tax) / 100;
     totalBill = totalBil + vat - discount;
   } catch (err) {
     window.location.reload(false);
   }
-
-  const handleClick = () => {
-    const bil = {
-      paid: true,
-      left: 0,
-    };
-    dispatch(billEditAction(id, bil));
-    setReload(true);
-  };
-  const handleReload = () => {
-    setBilll(data);
-  };
   const handleDelete = (bill) => {
     bill.map((b) => dispatch(deleteBillAction(b._id)));
     nevigate(`/`);
@@ -88,6 +77,9 @@ const BillDetails = ({ bill }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleEdit = () => {
+    nevigate(`/editbill/${id}`);
+  };
 
   return (
     <Box>
@@ -105,6 +97,7 @@ const BillDetails = ({ bill }) => {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={handleAddBill}
+          size="small"
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
@@ -127,8 +120,22 @@ const BillDetails = ({ bill }) => {
         </Button>
         <Button
           variant="contained"
+          size="small"
+          startIcon={<EditIcon />}
+          onClick={handleEdit}
+          sx={{
+            backgroundColor: "#0081C9",
+            mr: "2px",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Edit Bill
+        </Button>
+        <Button
+          variant="contained"
           startIcon={<DeleteIcon />}
           onClick={handleClickOpen}
+          size="small"
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
@@ -145,7 +152,7 @@ const BillDetails = ({ bill }) => {
           <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {`Are you Sure want to Delete the Bill of ${billl.name}?`}
+              {`Do you want to Delete the Bill of ${billl.name}?`}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -156,42 +163,6 @@ const BillDetails = ({ bill }) => {
           </DialogActions>
         </Dialog>
       </Paper>
-      {!billl.paid && (
-        <Paper
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "10px",
-            margin: "5px 0",
-          }}
-        >
-          <Typography>{reload ? "" : "Bill is Not Paid"}</Typography>
-          {reload ? (
-            <Button
-              onClick={handleReload}
-              variant="contained"
-              sx={{
-                backgroundColor: "#0081C9",
-                ":hover": { backgroundColor: "#05a5fb" },
-              }}
-            >
-              Reload
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={handleClick}
-              sx={{
-                backgroundColor: "#0081C9",
-                ":hover": { backgroundColor: "#05a5fb" },
-              }}
-            >
-              Click for Paid
-            </Button>
-          )}
-        </Paper>
-      )}
       <Paper
         elevation={4}
         id="billPaper"
@@ -204,7 +175,11 @@ const BillDetails = ({ bill }) => {
             alignItems: "center",
           }}
         >
-          <Typography component="h2" variant="h4" sx={{ fontWeight: "bold" }}>
+          <Typography
+            component="h2"
+            variant="h4"
+            sx={{ fontWeight: "bold", color: "#0081C9" }}
+          >
             SUPER PHALIA
           </Typography>
           <Typography component="p" variant="body2">
@@ -336,6 +311,18 @@ const BillDetails = ({ bill }) => {
             borderBottom: "1px dotted black",
           }}
         >
+          <Typography>Bill</Typography>
+          <Typography>{totalBil}</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "15px",
+            borderBottom: "1px dotted black",
+          }}
+        >
           <Typography>VAT 5%</Typography>
           <Typography>{vat}</Typography>
         </Box>
@@ -374,7 +361,7 @@ const BillDetails = ({ bill }) => {
               borderBottom: "1px dotted black",
             }}
           >
-            <Typography>Left</Typography>
+            <Typography>Pending Balance</Typography>
             <Typography>{billl.left === 0 ? totalBill : billl.left}</Typography>
           </Box>
         )}

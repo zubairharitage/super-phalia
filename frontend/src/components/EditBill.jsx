@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Button,
@@ -13,32 +13,29 @@ import {
   Typography,
 } from "@mui/material";
 
-import { createBillAction } from "../actions/invoiceAction";
+import { billEditAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
-import SuccessMessage from "../components/SuccessMessage";
 
-const CreateBill = ({ preBill }) => {
+const EditBill = ({ bill }) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const nevigate = useNavigate();
 
-  const { error, bill } = useSelector((state) => state.createInvoice);
-
-  const [clearBill, setClearBill] = useState(bill);
   const [invoice, setInvoice] = useState({
-    name: preBill.name,
-    invoiceNumber: preBill.invoiceNumber,
-    startingTime: "",
-    closingTime: "",
-    jobDescription: "",
-    equipmentType: preBill.equipmentType,
-    tripHours: "",
-    rate: "",
-    tax: preBill.tax,
-    trn: preBill.trn,
-    left: 0,
-    discount: 0,
-    date: preBill.date,
-    paid: true,
+    invoiceNumber: bill.invoiceNumber,
+    name: bill.name,
+    startingTime: bill.startingTime,
+    closingTime: bill.closingTime,
+    jobDescription: bill.jobDescription,
+    equipmentType: bill.equipmentType,
+    tripHours: bill.tripHours,
+    rate: bill.rate,
+    tax: bill.tax,
+    trn: bill.trn,
+    left: bill.left,
+    discount: bill.discount,
+    date: bill.date,
+    paid: bill.paid,
   });
 
   const handleChange = (e) => {
@@ -53,14 +50,11 @@ const CreateBill = ({ preBill }) => {
   };
 
   const handleClick = () => {
-    dispatch(createBillAction(invoice));
-    nevigate(`/billdetail/${preBill._id}`);
+    dispatch(billEditAction(id, invoice));
+    nevigate(`/billdetail/${bill._id}`);
   };
 
-  const handleShow = () => {
-    setClearBill({});
-  };
-
+  const handleShow = () => {};
   return (
     <>
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
@@ -68,9 +62,8 @@ const CreateBill = ({ preBill }) => {
           variant="h5"
           sx={{ margin: "10px", fontWeight: "600", textAlign: "center" }}
         >
-          Add Bill
+          Create Invoice
         </Typography>
-        {error ? <ErrorMessage error={error} /> : <div></div>}
         <Box>
           <TextField
             placeholder="Enter Name"
@@ -79,16 +72,13 @@ const CreateBill = ({ preBill }) => {
             value={invoice.name}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
-            disabled
           />
           <TextField
             placeholder="Enter Invoice Number"
             label="Invoice Number"
-            name="invoiceNumber"
             value={invoice.invoiceNumber}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
-            disabled
           />
           <TextField
             placeholder="Enter Starting time"
@@ -121,7 +111,6 @@ const CreateBill = ({ preBill }) => {
             value={invoice.equipmentType}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            disabled
           />
           <TextField
             placeholder="Enter Trip Hours"
@@ -148,7 +137,6 @@ const CreateBill = ({ preBill }) => {
               value={invoice.tax}
               onChange={handleChange}
               name="tax"
-              disabled
             >
               <MenuItem value={0}>No</MenuItem>
               <MenuItem value={5}>Yes</MenuItem>
@@ -156,14 +144,55 @@ const CreateBill = ({ preBill }) => {
           </FormControl>
           <TextField
             placeholder="Enter Customer TRN"
-            label="Customer TRN"
+            label="TRN"
             name="trn"
             value={invoice.trn}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
-            disabled
           />
 
+          <TextField
+            placeholder="Enter discount for cst"
+            label="Discount"
+            name="discount"
+            value={invoice.discount}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <TextField
+            placeholder="Enter Date"
+            label="Date"
+            name="date"
+            value={invoice.date}
+            onChange={handleChange}
+            sx={{ width: "48%", margin: "5px" }}
+          />
+          <FormControl sx={{ width: "48%", margin: "5px" }}>
+            <InputLabel id="demo-simple-select-label">select</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              label="paid"
+              value={invoice.paid}
+              onChange={handleChange}
+              name="paid"
+            >
+              <MenuItem value={true}>paid</MenuItem>
+              <MenuItem value={false}>unpaid</MenuItem>
+            </Select>
+          </FormControl>
+          {!invoice.paid ? (
+            <TextField
+              placeholder="Enter how much Left"
+              label="Left"
+              name="left"
+              value={invoice.left}
+              onChange={handleChange}
+              sx={{ width: "48%", margin: "5px" }}
+            />
+          ) : (
+            <Box></Box>
+          )}
           <Button
             variant="contained"
             onClick={handleClick}
@@ -174,9 +203,9 @@ const CreateBill = ({ preBill }) => {
               ":hover": { backgroundColor: "#05a5fb" },
             }}
           >
-            Add Bill
+            Save
           </Button>
-          {clearBill && (
+          {/* {bill && (
             <Button
               variant="outlined"
               onClick={handleShow}
@@ -188,12 +217,11 @@ const CreateBill = ({ preBill }) => {
             >
               Show bill
             </Button>
-          )}
+          )} */}
         </Box>
-        {clearBill && <SuccessMessage />}
       </Container>
     </>
   );
 };
 
-export default CreateBill;
+export default EditBill;
