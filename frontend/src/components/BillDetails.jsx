@@ -17,8 +17,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -28,12 +27,10 @@ import { useNavigate } from "react-router-dom";
 import { deleteBillAction } from "../actions/invoiceAction";
 
 const BillDetails = ({ bill }) => {
-  const { id } = useParams();
   const dispatch = useDispatch();
   const nevigate = useNavigate();
-  const { data } = useSelector((state) => state.editInvoice);
 
-  const [billl, setBilll] = useState(bill[0]);
+  const billl = bill[0];
   const [open, setOpen] = useState(false);
 
   let discount;
@@ -54,7 +51,7 @@ const BillDetails = ({ bill }) => {
     nevigate(`/`);
   };
   const handleAddBill = () => {
-    nevigate(`/addbill/${id}`);
+    nevigate(`/addbill/${billl._id}`);
   };
   const handleDownload = async () => {
     const element = document.getElementById("billPaper"),
@@ -78,7 +75,7 @@ const BillDetails = ({ bill }) => {
     setOpen(false);
   };
   const handleEdit = () => {
-    nevigate(`/editbill/${id}`);
+    nevigate(`/editbill/${billl._id}`);
   };
 
   return (
@@ -91,6 +88,7 @@ const BillDetails = ({ bill }) => {
           padding: "10px",
           margin: "5px 0",
           backgroundColor: "#0081C9",
+          borderBottom: `3px solid ${billl.paid ? "#0081C9" : "red"}`,
         }}
       >
         <Button

@@ -210,7 +210,7 @@ const Home = () => {
             sx={{ width: "48%", margin: "5px" }}
           />
           <FormControl sx={{ width: "48%", margin: "5px" }}>
-            <InputLabel id="demo-simple-select-label">select</InputLabel>
+            <InputLabel id="demo-simple-select-label">Bill</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"

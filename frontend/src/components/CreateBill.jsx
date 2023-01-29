@@ -15,15 +15,13 @@ import {
 
 import { createBillAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
-import SuccessMessage from "../components/SuccessMessage";
 
 const CreateBill = ({ preBill }) => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
 
-  const { error, bill } = useSelector((state) => state.createInvoice);
+  const { error } = useSelector((state) => state.createInvoice);
 
-  const [clearBill, setClearBill] = useState(bill);
   const [invoice, setInvoice] = useState({
     name: preBill.name,
     invoiceNumber: preBill.invoiceNumber,
@@ -54,11 +52,9 @@ const CreateBill = ({ preBill }) => {
 
   const handleClick = () => {
     dispatch(createBillAction(invoice));
-    nevigate(`/billdetail/${preBill._id}`);
-  };
-
-  const handleShow = () => {
-    setClearBill({});
+    if (invoice.jobDescription && invoice.tripHours && invoice.rate !== "") {
+      nevigate(`/billdetail/${preBill._id}`);
+    }
   };
 
   return (
@@ -113,6 +109,7 @@ const CreateBill = ({ preBill }) => {
             value={invoice.jobDescription}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Equipment Type"
@@ -130,6 +127,7 @@ const CreateBill = ({ preBill }) => {
             value={invoice.tripHours}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <TextField
             placeholder="Enter Rate"
@@ -138,6 +136,7 @@ const CreateBill = ({ preBill }) => {
             value={invoice.rate}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
+            required
           />
           <FormControl sx={{ width: "48%", margin: "5px" }}>
             <InputLabel id="simple-select-label">Tax</InputLabel>
@@ -176,21 +175,7 @@ const CreateBill = ({ preBill }) => {
           >
             Add Bill
           </Button>
-          {clearBill && (
-            <Button
-              variant="outlined"
-              onClick={handleShow}
-              sx={{
-                width: "48%",
-                margin: "5px",
-                ":hover": { backgroundColor: "#05a5fb", color: "white" },
-              }}
-            >
-              Show bill
-            </Button>
-          )}
         </Box>
-        {clearBill && <SuccessMessage />}
       </Container>
     </>
   );
