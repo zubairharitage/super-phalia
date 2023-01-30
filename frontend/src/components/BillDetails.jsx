@@ -75,7 +75,6 @@ const BillDetails = ({ bill }) => {
   const handleEdit = () => {
     nevigate(`/editbill/${billl._id}`);
   };
-
   return (
     <Box>
       <Paper
@@ -151,7 +150,7 @@ const BillDetails = ({ bill }) => {
               {`Which bill you want to delete:`}
               <br />
               {bill.map((b, index) => (
-                <>
+                <Box key={b._id}>
                   Sr No. {index + 1}
                   <Button
                     startIcon={<DeleteIcon />}
@@ -160,7 +159,7 @@ const BillDetails = ({ bill }) => {
                     onClick={() => handleDeleteOneBill(b._id)}
                   ></Button>
                   <br />
-                </>
+                </Box>
               ))}
               <br />
               {`Or Do you want to Delete the whole Bill?`}
