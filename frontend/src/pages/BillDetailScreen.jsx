@@ -31,8 +31,8 @@ const BillDetailScreen = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
-        {error && <ErrorMessage />}
+      <Container maxWidth="md" sx={{ marginBottom: "50px" }}>
+        {error && <ErrorMessage error={error} />}
         {loading ? <Loading /> : <BillDetails bill={data} />}
       </Container>
       <Footer />

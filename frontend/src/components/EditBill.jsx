@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 
 import { billEditAction } from "../actions/invoiceAction";
-import ErrorMessage from "../components/ErrorMessage";
 
 const EditBill = ({ bill }) => {
   const { id } = useParams();
@@ -53,8 +52,6 @@ const EditBill = ({ bill }) => {
     dispatch(billEditAction(id, invoice));
     nevigate(`/billdetail/${bill._id}`);
   };
-
-  const handleShow = () => {};
   return (
     <>
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
@@ -205,19 +202,6 @@ const EditBill = ({ bill }) => {
           >
             Save
           </Button>
-          {/* {bill && (
-            <Button
-              variant="outlined"
-              onClick={handleShow}
-              sx={{
-                width: "48%",
-                margin: "5px",
-                ":hover": { backgroundColor: "#05a5fb", color: "white" },
-              }}
-            >
-              Show bill
-            </Button>
-          )} */}
         </Box>
       </Container>
     </>

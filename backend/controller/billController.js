@@ -46,7 +46,7 @@ export const getBillDetails = async (req, res) => {
     if (!bill) {
       return res.status(404).json({
         success: false,
-        message: "Product Not Found",
+        message: "Bill Not Found",
       });
     }
 
@@ -70,7 +70,7 @@ export const updateBill = async (req, res) => {
     if (!bill) {
       return res.status(404).json({
         success: false,
-        message: "Product Not Found",
+        message: "Bill Not Found",
       });
     }
 
@@ -100,14 +100,14 @@ export const deleteBill = async (req, res) => {
     if (!bill) {
       return res.status(404).json({
         success: false,
-        message: "Product Not Found",
+        message: "Bill Not Found",
       });
     }
     await bill.remove();
 
     return res.status(200).json({
       success: true,
-      message: "Product deleted successfully",
+      message: "Bill deleted successfully",
     });
   } catch (err) {
     return res.status(500).json({
