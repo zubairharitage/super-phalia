@@ -79,6 +79,7 @@ const BillDetails = ({ bill }) => {
   const handleEdit = () => {
     nevigate(`/editbill/${billl._id}`);
   };
+
   return (
     <Box>
       <Paper
@@ -153,16 +154,16 @@ const BillDetails = ({ bill }) => {
             <DialogContentText id="alert-dialog-description">
               {`Which bill you want to delete:`}
               <br />
-              {bill.map((b, index) => (
-                <Box key={b._id}>
-                  {`Bill No. ${index + 1}`}
-                  <Button
-                    startIcon={<DeleteIcon />}
-                    color="error"
-                    on
-                    onClick={() => handleDeleteOneBill(b._id)}
-                  ></Button>
-                </Box>
+              {bill.map((val, index) => (
+                <Button
+                  key={val._id}
+                  endIcon={<DeleteIcon />}
+                  color="error"
+                  onClick={() => handleDeleteOneBill(val._id)}
+                  sx={{ display: "block" }}
+                >
+                  Bill No. {index + 1}
+                </Button>
               ))}
               <br />
               {`Or Do you want to Delete the whole Bill?`}
@@ -184,7 +185,7 @@ const BillDetails = ({ bill }) => {
       <Box
         ref={conponentRef}
         sx={{
-          padding: "8px",
+          padding: "9px",
           color: "#0081C9",
           backgroundColor: "white",
         }}
@@ -199,7 +200,7 @@ const BillDetails = ({ bill }) => {
           <Typography component="h2" variant="h4" sx={{ fontWeight: "bold" }}>
             SUPER PHALIA
           </Typography>
-          <Typography component="p" variant="body2">
+          <Typography component="h4" variant="h6" sx={{ fontWeight: "bold" }}>
             TRANSPORT BY HEAVY TRUCKS I.I.C
           </Typography>
         </Box>
@@ -261,9 +262,7 @@ const BillDetails = ({ bill }) => {
             }}
           >
             <Typography>No:&nbsp;</Typography>
-            <Typography sx={{ color: "black" }}>
-              {billl.invoiceNumber}
-            </Typography>
+            <Typography sx={{ color: "red" }}>{billl.invoiceNumber}</Typography>
           </Box>
           <Typography sx={{ color: "black" }}>
             {billl.paid && "Paid"}
@@ -324,7 +323,8 @@ const BillDetails = ({ bill }) => {
                   Closing Time
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
-                  Job Description
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Job
+                  Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
                   Trip Hours
@@ -333,7 +333,7 @@ const BillDetails = ({ bill }) => {
                   Rate
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
-                  Amount in AED
+                  Amount
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -515,7 +515,7 @@ const BillDetails = ({ bill }) => {
             sx={{
               display: "inline-block",
               width: "40%",
-              fontWeight: "bold",
+              textAlign: "justify",
             }}
           >
             Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
