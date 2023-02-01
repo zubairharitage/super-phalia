@@ -34,16 +34,20 @@ const BillDetails = ({ bill }) => {
   const billl = bill[0];
   const [open, setOpen] = useState(false);
 
+  const arrayForBoxes = [1, 2, 3, 4, 5, 6];
+  bill.forEach(() => arrayForBoxes.pop());
   let discount;
   let vat;
   let totalBill;
   let totalBil;
+  let pendingBalance;
 
   try {
     totalBil = bill.reduce((sum, b) => sum + b.tripHours * b.rate, 0);
     discount = bill.reduce((sum, d) => sum + d.discount, 0);
     vat = (totalBil * billl.tax) / 100;
     totalBill = totalBil + vat - discount;
+    pendingBalance = billl.left === 0 ? totalBill : billl.left;
   } catch (err) {
     window.location.reload(false);
   }
@@ -151,14 +155,13 @@ const BillDetails = ({ bill }) => {
               <br />
               {bill.map((b, index) => (
                 <Box key={b._id}>
-                  Sr No. {index + 1}
+                  {`Bill No. ${index + 1}`}
                   <Button
                     startIcon={<DeleteIcon />}
                     color="error"
                     on
                     onClick={() => handleDeleteOneBill(b._id)}
                   ></Button>
-                  <br />
                 </Box>
               ))}
               <br />
@@ -357,6 +360,34 @@ const BillDetails = ({ bill }) => {
                   </TableCell>
                 </TableRow>
               ))}
+              {arrayForBoxes.map((val) => (
+                <TableRow sx={{ border: "2px solid #0081C9" }} key={val}>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                    <br />
+                    {""}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
@@ -408,23 +439,20 @@ const BillDetails = ({ bill }) => {
           <Typography>Total Bill</Typography>
           <Typography sx={{ color: "black" }}>{totalBill}</Typography>
         </Box>
-
-        {!billl.paid && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              margin: "15px",
-              borderBottom: "2px solid #0081C9",
-            }}
-          >
-            <Typography>Pending Balance</Typography>
-            <Typography sx={{ color: "black" }}>
-              {billl.left === 0 ? totalBill : billl.left}
-            </Typography>
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "15px",
+            borderBottom: "2px solid #0081C9",
+          }}
+        >
+          <Typography>Pending Balance</Typography>
+          <Typography sx={{ color: "black" }}>
+            {billl.paid ? "0" : pendingBalance}
+          </Typography>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -474,6 +502,26 @@ const BillDetails = ({ bill }) => {
             }}
           >
             Signature:
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            margin: "15px",
+          }}
+        >
+          <Typography
+            variant="body2"
+            component="p"
+            sx={{
+              display: "inline-block",
+              width: "40%",
+              fontWeight: "bold",
+            }}
+          >
+            Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
+            quidem dignissimos fugiat perspiciatis tempora minima libero animi
+            illum similique. Labore non cum velit laboriosam pariatur iure!
+            Voluptate placeat nisi labore?
           </Typography>
         </Box>
       </Box>
