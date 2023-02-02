@@ -9,12 +9,14 @@ import DashboardCard from "./DashboardCard";
 
 const Dashboard = ({ bills }) => {
   const [value, setValue] = useState(dayjs("01-01-2022"));
+
   const filterByYear = bills.filter((bill) =>
     bill.date.includes(`${value.$y}`)
   );
-  const data = filterByYear.filter((bill) =>
-    bill.date.slice(2, 4).includes(`${value.$M + 1}`)
-  );
+  const m = `${value.$M + 1}`;
+  const mon = m.length === 1 ? `0${m}` : m;
+
+  const data = filterByYear.filter((bill) => bill.date.slice(3, 5) === mon);
 
   // for total bills in months
   const func = (sum, bill) => {

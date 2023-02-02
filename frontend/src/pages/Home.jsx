@@ -27,6 +27,15 @@ const Home = () => {
   const [billNumber, setBillNumber] = useState("");
   const [reload, setReload] = useState(0);
 
+  const d = new Date();
+  const dayy = `${d.getDate()}`;
+  const day = dayy.length === 1 ? `0${dayy}` : dayy;
+
+  const mon = `${d.getMonth() + 1}`;
+  const month = mon.length === 1 ? `0${mon}` : mon;
+
+  const dat = `${day}-${month}-${d.getFullYear()}`;
+
   const [invoice, setInvoice] = useState({
     name: "",
     startingTime: "",
@@ -39,9 +48,7 @@ const Home = () => {
     trn: 0,
     left: 0,
     discount: 0,
-    date: `${new Date().getDate()}-${
-      new Date().getMonth() + 1
-    }-${new Date().getFullYear()}`,
+    date: dat,
     paid: false,
   });
 
@@ -83,9 +90,7 @@ const Home = () => {
       trn: 0,
       left: 0,
       discount: 0,
-      date: `${new Date().getDate()}-${
-        new Date().getMonth() + 1
-      }-${new Date().getFullYear()}`,
+      date: dat,
       paid: false,
     });
     setBillNumber("");
