@@ -9,6 +9,7 @@ import BillDetailScreen from "./pages/BillDetailScreen";
 import CreateBillScreen from "./pages/CreateBillScreen";
 import EditBillScreen from "./pages/EditBillScreen";
 import DashboardScreen from "./pages/DashboardScreen";
+import PrintBillScreen from "./pages/PrintBillScreen";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/paid" element={<PaidScreen />} />
         <Route path="/unpaid" element={<UnPaidScreen />} />
         <Route path="/billdetail/:id" element={<BillDetailScreen />} />
+        <Route path="/printbill/:id" element={<PrintBillScreen />} />
         <Route path="/addbill/:id" element={<CreateBillScreen />} />
         <Route path="/editbill/:id" element={<EditBillScreen />} />
         <Route path="/dashboard" element={<DashboardScreen />} />

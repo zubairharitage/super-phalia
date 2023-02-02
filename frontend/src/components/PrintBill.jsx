@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import {
   Box,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,29 +9,15 @@ import {
   TableHead,
   TableRow,
   Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import PrintIcon from "@mui/icons-material/Print";
+
 import { useNavigate } from "react-router-dom";
 
-import { deleteBillAction } from "../actions/invoiceAction";
-
 const BillDetails = ({ bill }) => {
-  const dispatch = useDispatch();
-  const nevigate = useNavigate();
   const conponentRef = useRef();
+  const nevigate = useNavigate();
 
   const billl = bill[0];
-  const [open, setOpen] = useState(false);
 
   const arrayForBoxes = [1, 2, 3, 4, 5, 6];
   bill.forEach(() => arrayForBoxes.pop());
@@ -50,137 +36,21 @@ const BillDetails = ({ bill }) => {
   } catch (err) {
     window.location.reload(false);
   }
-  const handleDelete = (bill) => {
-    bill.map((b) => dispatch(deleteBillAction(b._id)));
-    nevigate(`/`);
-  };
+  const handlePrint = useReactToPrint({
+    content: () => conponentRef.current,
+    onAfterPrint: () => nevigate(`/billdetail/${billl._id}`),
+    documentTitle: `${billl.name}-${billl.invoiceNumber}`,
+  });
 
-  const handleDeleteOneBill = (id) => {
-    dispatch(deleteBillAction(id));
-    window.location.reload(false);
-  };
-
-  const handleAddBill = () => {
-    nevigate(`/addbill/${billl._id}`);
-  };
-  const handlePrint = () => {
-    nevigate(`/printbill/${billl._id}`);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleEdit = () => {
-    nevigate(`/editbill/${billl._id}`);
-  };
+  setTimeout(() => handlePrint(), 1000);
 
   return (
     <Box>
-      <Paper
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "10px",
-          margin: "5px 0",
-          backgroundColor: "#0081C9",
-          borderBottom: `3px solid ${billl.paid ? "#0081C9" : "red"}`,
-        }}
-      >
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleAddBill}
-          sx={{
-            backgroundColor: "#0081C9",
-            ":hover": { backgroundColor: "#05a5fb" },
-          }}
-        >
-          Add Bill
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<EditIcon />}
-          onClick={handleEdit}
-          sx={{
-            backgroundColor: "#0081C9",
-            mr: "2px",
-            ":hover": { backgroundColor: "#05a5fb" },
-          }}
-        >
-          Edit Bill
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<PrintIcon />}
-          onClick={handlePrint}
-          sx={{
-            backgroundColor: "#0081C9",
-            mr: "2px",
-            ":hover": { backgroundColor: "#05a5fb" },
-          }}
-        >
-          Print Bill
-        </Button>
-        <Button
-          variant="contained"
-          startIcon={<DeleteIcon />}
-          onClick={handleClickOpen}
-          sx={{
-            backgroundColor: "#0081C9",
-            ":hover": { backgroundColor: "#05a5fb" },
-          }}
-        >
-          Delete Bill
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              {`Which bill you want to delete:`}
-              <br />
-              {bill.map((val, index) => (
-                <Button
-                  key={val._id}
-                  endIcon={<DeleteIcon />}
-                  color="error"
-                  onClick={() => handleDeleteOneBill(val._id)}
-                  sx={{ display: "block" }}
-                >
-                  Bill No. {index + 1}
-                </Button>
-              ))}
-              <br />
-              {`Or Do you want to Delete the whole Bill?`}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>No</Button>
-            <Button
-              color="error"
-              onClick={() => handleDelete(bill)}
-              autoFocus
-              startIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Paper>
       <Box
         ref={conponentRef}
         sx={{
           padding: "9px",
-          color: "#0081C9",
+          color: "white",
           backgroundColor: "white",
         }}
       >
@@ -192,30 +62,30 @@ const BillDetails = ({ bill }) => {
           }}
         >
           <Typography component="h2" variant="h4" sx={{ fontWeight: "bold" }}>
-            SUPER PHALIA
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
           <Typography component="h4" variant="h6" sx={{ fontWeight: "bold" }}>
-            TRANSPORT BY HEAVY TRUCKS I.I.C
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
         </Box>
         <Box sx={{ textAlign: "center" }}>
           <Typography component="h2" variant="h6" sx={{ fontWeight: "bold" }}>
-            MR. ARIF OR ATIF
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
           <Typography component="p" variant="body1">
-            MOB: 050-5837940/055-9910062/052-4723299
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
           <Typography
             component="p"
             variant="body2"
             sx={{
-              border: "2px solid #0081C9",
+              border: "2px solid white",
               display: "inline-block",
               padding: "2px",
               margin: "5px",
             }}
           >
-            PLEASE ISSUE CHEQUE IN A/C OF MR. ARIF OR ATIF ALI
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </Typography>
           <Box sx={{ textAlign: "center" }}>
             <Typography
@@ -223,18 +93,18 @@ const BillDetails = ({ bill }) => {
               variant="body1"
               sx={{ fontWeight: "bold" }}
             >
-              TAX INVOICE
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Typography>
             <Typography
               component="p"
               variant="body1"
               sx={{
-                borderTop: "2px solid #0081C9",
+                borderTop: "2px solid white",
                 display: "inline-block",
                 color: "black",
               }}
             >
-              TRN: 100594171900003
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Typography>
           </Box>
         </Box>
@@ -245,7 +115,7 @@ const BillDetails = ({ bill }) => {
             alignItems: "center",
             padding: "10px",
             marginTop: "5px",
-            border: "2px solid #0081C9",
+            border: "2px solid white",
           }}
         >
           <Box
@@ -255,7 +125,9 @@ const BillDetails = ({ bill }) => {
               alignItems: "center",
             }}
           >
-            <Typography>No:&nbsp;</Typography>
+            <Typography>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </Typography>
             <Typography sx={{ color: "red" }}>{billl.invoiceNumber}</Typography>
           </Box>
           <Typography sx={{ color: "black" }}>
@@ -268,7 +140,7 @@ const BillDetails = ({ bill }) => {
               alignItems: "center",
             }}
           >
-            <Typography>Date:&nbsp;</Typography>
+            <Typography>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
             <Typography sx={{ color: "black" }}>{billl.date}</Typography>
           </Box>
         </Box>
@@ -278,7 +150,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "10px",
-            border: "2px solid #0081C9",
+            border: "2px solid white",
           }}
         >
           <Box
@@ -288,7 +160,9 @@ const BillDetails = ({ bill }) => {
               alignItems: "center",
             }}
           >
-            <Typography>Company Name:&nbsp;</Typography>
+            <Typography>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </Typography>
             <Typography sx={{ color: "black" }}>{billl.name}</Typography>
           </Box>
           <Box
@@ -298,7 +172,9 @@ const BillDetails = ({ bill }) => {
               alignItems: "center",
             }}
           >
-            <Typography>Equipment Type:&nbsp;</Typography>
+            <Typography>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </Typography>
             <Typography sx={{ color: "black" }}>
               {billl.equipmentType}
             </Typography>
@@ -307,76 +183,76 @@ const BillDetails = ({ bill }) => {
         <TableContainer>
           <Table>
             <TableHead
-              sx={{ backgroundColor: "#0081C9", border: "2px solid #0081C9" }}
+              sx={{ backgroundColor: "white", border: "2px solid white" }}
             >
-              <TableRow sx={{ border: "2px solid #0081C9" }}>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+              <TableRow sx={{ border: "2px solid white" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   Starting Time
                 </TableCell>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   Closing Time
                 </TableCell>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Job
                   Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </TableCell>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   Trip Hours
                 </TableCell>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   Rate
                 </TableCell>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell sx={{ color: "white", border: "2px solid white" }}>
                   Amount
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {bill.map((b) => (
-                <TableRow sx={{ border: "2px solid #0081C9" }} key={b._id}>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                <TableRow sx={{ border: "2px solid white" }} key={b._id}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.startingTime}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.closingTime}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.jobDescription}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.tripHours}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.rate}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     {b.tripHours * b.rate}
                   </TableCell>
                 </TableRow>
               ))}
               {arrayForBoxes.map((val) => (
-                <TableRow sx={{ border: "2px solid #0081C9" }} key={val}>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                <TableRow sx={{ border: "2px solid white" }} key={val}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
-                  <TableCell sx={{ border: "2px solid #0081C9" }}>
+                  <TableCell sx={{ border: "2px solid white" }}>
                     <br />
                     {""}
                   </TableCell>
@@ -391,7 +267,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             margin: "15px",
-            borderBottom: "2px solid #0081C9",
+            borderBottom: "2px solid white",
           }}
         >
           <Typography>Bill</Typography>
@@ -403,7 +279,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             margin: "15px",
-            borderBottom: "2px solid #0081C9",
+            borderBottom: "2px solid white",
           }}
         >
           <Typography>VAT 5%</Typography>
@@ -415,7 +291,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             margin: "15px",
-            borderBottom: "2px solid #0081C9",
+            borderBottom: "2px solid white",
           }}
         >
           <Typography>Discount</Typography>
@@ -427,7 +303,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             margin: "15px",
-            borderBottom: "2px solid #0081C9",
+            borderBottom: "2px solid white",
           }}
         >
           <Typography>Total Bill</Typography>
@@ -439,7 +315,7 @@ const BillDetails = ({ bill }) => {
             justifyContent: "space-between",
             alignItems: "center",
             margin: "15px",
-            borderBottom: "2px solid #0081C9",
+            borderBottom: "2px solid white",
           }}
         >
           <Typography>Pending Balance</Typography>
@@ -460,7 +336,7 @@ const BillDetails = ({ bill }) => {
             component="p"
             sx={{
               display: "inline-block",
-              borderBottom: "2px solid #0081C9",
+              borderBottom: "2px solid white",
               width: "40%",
               fontWeight: "bold",
             }}
@@ -472,7 +348,7 @@ const BillDetails = ({ bill }) => {
             component="p"
             sx={{
               display: "inline-block",
-              borderBottom: "2px solid #0081C9",
+              borderBottom: "2px solid white",
               width: "45%",
               fontWeight: "bold",
             }}
@@ -490,7 +366,7 @@ const BillDetails = ({ bill }) => {
             component="p"
             sx={{
               display: "inline-block",
-              borderBottom: "2px solid #0081C9",
+              borderBottom: "2px solid white",
               width: "40%",
               fontWeight: "bold",
             }}
