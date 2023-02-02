@@ -24,7 +24,15 @@ const Dashboard = ({ bills }) => {
   const discount = data.reduce((sum, d) => sum + d.discount, 0);
   const totalAmount = totalBil - discount;
   return (
-    <Box sx={{ margin: "15px" }}>
+    <Box
+      sx={{
+        margin: "15px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           openTo="year"
@@ -39,10 +47,10 @@ const Dashboard = ({ bills }) => {
           renderInput={(params) => <TextField {...params} helperText={null} />}
         />
       </LocalizationProvider>
-      <Box sx={{ display: "flex", margin: "10px" }}>
+      <Box sx={{ display: "flex", margin: "10px", width: "100%" }}>
         <Card
           sx={{
-            width: "40%",
+            width: "30%",
             backgroundColor: "#0081C9",
             color: "white",
             padding: "5px",
@@ -60,13 +68,13 @@ const Dashboard = ({ bills }) => {
         </Card>
         <Card
           sx={{
-            width: "40%",
+            width: "50%",
             backgroundColor: "#0081C9",
             color: "white",
             padding: "5px",
           }}
         >
-          <Typography>Total Balance</Typography>
+          <Typography>Total Income</Typography>
           <Typography
             variant="h4"
             component={"h3"}
