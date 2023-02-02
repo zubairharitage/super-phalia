@@ -14,32 +14,80 @@ const Header = () => {
     >
       <Link to="/" style={{ textDecoration: "none" }}>
         <Typography
-          sx={{ fontWeight: "bold", cursor: "pointer", color: "white" }}
+          sx={{
+            fontWeight: "bold",
+            cursor: "pointer",
+            color: "white",
+            backgroundColor: "transparent",
+            border: "none",
+            borderRadius: "5px",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
           variant={"h5"}
-          component="h4"
+          component="button"
         >
           SUPER PHALIA
         </Typography>
       </Link>
       <Box>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Button sx={{ mr: "3px", color: "white", fontWeight: "600" }}>
+          <Button
+            sx={{
+              mr: "3px",
+              color: "white",
+              fontWeight: "600",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
             Create Invoice
           </Button>
         </Link>
         <Link to="/all" style={{ textDecoration: "none" }}>
-          <Button sx={{ mr: "3px", color: "white", fontWeight: "600" }}>
+          <Button
+            sx={{
+              mr: "3px",
+              color: "white",
+              fontWeight: "600",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
             All Bills
           </Button>
         </Link>
         <Link to="/paid" style={{ textDecoration: "none" }}>
-          <Button sx={{ mr: "3px", color: "white", fontWeight: "600" }}>
+          <Button
+            sx={{
+              mr: "3px",
+              color: "white",
+              fontWeight: "600",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
             Paid
           </Button>
         </Link>
         <Link to="/unpaid" style={{ textDecoration: "none" }}>
-          <Button sx={{ mr: "3px", color: "white", fontWeight: "600" }}>
+          <Button
+            sx={{
+              mr: "3px",
+              color: "white",
+              fontWeight: "600",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
             UnPaid
+          </Button>
+        </Link>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <Button
+            sx={{
+              mr: "3px",
+              color: "white",
+              fontWeight: "600",
+              ":hover": { backgroundColor: "#05a5fb" },
+            }}
+          >
+            Dashboard
           </Button>
         </Link>
       </Box>

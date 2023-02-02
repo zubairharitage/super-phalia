@@ -97,7 +97,6 @@ const BillDetails = ({ bill }) => {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={handleAddBill}
-          size="small"
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
@@ -107,7 +106,6 @@ const BillDetails = ({ bill }) => {
         </Button>
         <Button
           variant="contained"
-          size="small"
           startIcon={<EditIcon />}
           onClick={handleEdit}
           sx={{
@@ -120,7 +118,6 @@ const BillDetails = ({ bill }) => {
         </Button>
         <Button
           variant="contained"
-          size="small"
           startIcon={<PrintIcon />}
           onClick={handlePrint}
           sx={{
@@ -135,7 +132,6 @@ const BillDetails = ({ bill }) => {
           variant="contained"
           startIcon={<DeleteIcon />}
           onClick={handleClickOpen}
-          size="small"
           sx={{
             backgroundColor: "#0081C9",
             ":hover": { backgroundColor: "#05a5fb" },
