@@ -16,6 +16,9 @@ import {
   EDIT_BILL_REQUEST,
   EDIT_BILL_SUCCESS,
   EDIT_BILL_FAIL,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllBillsAction = () => async (dispatch) => {
@@ -32,6 +35,23 @@ export const getAllBillsAction = () => async (dispatch) => {
       ? error.response.data.message
       : error.message;
     dispatch({ type: ALL_BILL_FAIL, payload: errorMessage.messsage });
+  }
+};
+
+export const getUserAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+
+    const { data } = await axios.get("/phalia/userapi/v1/user/get");
+    dispatch({
+      type: GET_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const errorMessage = error.response
+      ? error.response.data.message
+      : error.message;
+    dispatch({ type: GET_USER_FAIL, payload: errorMessage.messsage });
   }
 };
 

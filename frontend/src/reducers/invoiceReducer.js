@@ -14,6 +14,9 @@ import {
   EDIT_BILL_REQUEST,
   EDIT_BILL_SUCCESS,
   EDIT_BILL_FAIL,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAIL,
 } from "../constants/invoiceConstants";
 
 export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
@@ -30,6 +33,28 @@ export const getAllInvoiceReducer = (state = { bills: [] }, action) => {
         billCount: action.payload.billCount,
       };
     case ALL_BILL_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const getUserReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case GET_USER_REQUEST:
+      return {
+        loading: true,
+        users: [],
+      };
+    case GET_USER_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload.user,
+      };
+    case GET_USER_FAIL:
       return {
         loading: false,
         error: action.payload,

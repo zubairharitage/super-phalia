@@ -12,7 +12,7 @@ const Header = () => {
         justifyContent: "space-between",
       }}
     >
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link to="/create" style={{ textDecoration: "none" }}>
         <Typography
           sx={{
             fontWeight: "bold",
@@ -30,7 +30,7 @@ const Header = () => {
         </Typography>
       </Link>
       <Box>
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/create" style={{ textDecoration: "none" }}>
           <Button
             sx={{
               mr: "3px",

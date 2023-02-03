@@ -52,7 +52,7 @@ const BillDetails = ({ bill }) => {
   }
   const handleDelete = (bill) => {
     bill.map((b) => dispatch(deleteBillAction(b._id)));
-    nevigate(`/`);
+    nevigate(`/create`);
   };
 
   const handleDeleteOneBill = (id) => {
