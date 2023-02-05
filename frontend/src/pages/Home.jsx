@@ -38,8 +38,8 @@ const Home = () => {
 
   const [invoice, setInvoice] = useState({
     name: "",
-    startingTime: "",
-    closingTime: "",
+    startingTime: "12:00",
+    closingTime: "12:00",
     jobDescription: "",
     equipmentType: "",
     tripHours: "",
@@ -128,16 +128,16 @@ const Home = () => {
             sx={{ margin: "5px", width: "48%" }}
           />
           <TextField
-            placeholder="Enter Starting time"
             label="Starting time"
+            type="time"
             name="startingTime"
             value={invoice.startingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
           <TextField
-            placeholder="Enter Closing time"
             label="Closing time"
+            type="time"
             name="closingTime"
             value={invoice.closingTime}
             onChange={handleChange}

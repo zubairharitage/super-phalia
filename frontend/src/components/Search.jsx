@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Box, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import BillPaper from "./BillPaper";
+import { useNavigate } from "react-router-dom";
 
-const Search = ({ bills, setReload }) => {
+const Search = ({ bills }) => {
+  const nevigate = useNavigate();
   const [searchName, setSearchName] = useState("");
   const [searchInvoice, setSearchInvoice] = useState("");
 
@@ -18,6 +20,9 @@ const Search = ({ bills, setReload }) => {
   };
   const handleChangeNumber = (e) => {
     setSearchInvoice(e.target.value);
+  };
+  const handleBack = () => {
+    nevigate(-1);
   };
 
   return (
@@ -55,8 +60,25 @@ const Search = ({ bills, setReload }) => {
           onChange={handleChangeNumber}
           sx={{ margin: "10px", width: "46%" }}
         />
+        <Button
+          variant="contained"
+          onClick={handleBack}
+          sx={{
+            backgroundColor: "#0081C9",
+
+            border: `1px solid #0081C9`,
+            ":hover": {
+              boxShadow: `0px 4px 8px rgba(38, 38, 38, 0.2)`,
+              backgroundColor: "#c9e4fe",
+              color: "black",
+              border: `1px solid #cccccc`,
+            },
+          }}
+        >
+          Back
+        </Button>
         {data.map((bill) => (
-          <BillPaper bill={bill} setReload={setReload} key={bill._id} />
+          <BillPaper bill={bill} key={bill._id} />
         ))}
       </Box>
     </>

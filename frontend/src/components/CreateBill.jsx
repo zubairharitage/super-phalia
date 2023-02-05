@@ -25,8 +25,8 @@ const CreateBill = ({ preBill }) => {
   const [invoice, setInvoice] = useState({
     name: preBill.name,
     invoiceNumber: preBill.invoiceNumber,
-    startingTime: "",
-    closingTime: "",
+    startingTime: "00:00:00",
+    closingTime: "00:00:00",
     jobDescription: "",
     equipmentType: preBill.equipmentType,
     tripHours: "",
@@ -101,16 +101,16 @@ const CreateBill = ({ preBill }) => {
             disabled
           />
           <TextField
-            placeholder="Enter Starting time"
             label="Starting time"
             name="startingTime"
+            type="time"
             value={invoice.startingTime}
             onChange={handleChange}
             sx={{ width: "48%", margin: "5px" }}
           />
           <TextField
-            placeholder="Enter Closing time"
             label="Closing time"
+            type="time"
             name="closingTime"
             value={invoice.closingTime}
             onChange={handleChange}

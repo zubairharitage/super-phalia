@@ -11,6 +11,7 @@ import EditBillScreen from "./pages/EditBillScreen";
 import DashboardScreen from "./pages/DashboardScreen";
 import PrintBillScreen from "./pages/PrintBillScreen";
 import LoginScreen from "./pages/LoginScreen";
+import DashboardDataScreen from "./pages/DashboardDataScreen";
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
         <Route path="/addbill/:id" element={<CreateBillScreen />} />
         <Route path="/editbill/:id" element={<EditBillScreen />} />
         <Route path="/dashboard" element={<DashboardScreen />} />
+        <Route path="/dashboard/data" element={<DashboardDataScreen />} />
         <Route
           path="*"
           element={
