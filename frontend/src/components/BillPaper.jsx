@@ -1,35 +1,58 @@
 import React from "react";
-import { Box, Button, Paper } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
+import useQuery from "../utils/useMediaQuery";
 
 const BillPaper = ({ bill }) => {
   const nevigate = useNavigate();
+  const query = useQuery();
 
   const handleView = () => {
     nevigate(`/billdetail/${bill._id}`);
   };
   return (
-    <Paper
-      elevation={4}
+    <Card
+      onClick={handleView}
       sx={{
-        padding: "15px",
-        margin: "15px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "skyblue",
-        borderRight: `5px solid ${bill.paid ? "green" : "red"}`,
+        margin: "10px",
+        width: query ? "23%" : "100%",
+        backgroundColor: "#0081C9",
+        color: "white",
+        cursor: "pointer",
+        border: `1px solid #0081C9`,
+        display: "inline-block",
+        ":hover": {
+          transition: `all 0.2s ease-out`,
+          boxShadow: `0px 4px 8px rgba(38, 38, 38, 0.2)`,
+          backgroundColor: "#c9e4fe",
+          color: "black",
+          border: `1px solid #cccccc`,
+        },
       }}
     >
-      <Box>{bill.invoiceNumber}</Box>
-      <Box>{bill.name}</Box>
-      <Box>
-        <Button color="success" onClick={handleView}>
-          <VisibilityIcon />
-        </Button>
-      </Box>
-    </Paper>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {bill.name}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h6" component="h6">
+            {bill.invoiceNumber}
+          </Typography>
+          <Typography variant="h6" component="h6">
+            {bill.paid ? "Paid" : "Unpaid"}
+          </Typography>
+        </Box>
+        <Typography variant="body">{bill.jobDescription}</Typography>
+      </CardContent>
+    </Card>
   );
 };
 

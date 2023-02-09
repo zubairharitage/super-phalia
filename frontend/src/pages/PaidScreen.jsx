@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -23,13 +23,13 @@ const PaidScreen = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
+      <Box sx={{ marginBottom: "50px" }}>
         {loading ? (
           <Loading />
         ) : (
           <Search bills={data.filter((bill) => bill.paid === true)} />
         )}
-      </Container>
+      </Box>
       <Footer />
     </>
   );

@@ -27,7 +27,7 @@ const Search = ({ bills }) => {
 
   return (
     <>
-      <Box>
+      <Box sx={{ width: "50%" }}>
         <TextField
           placeholder="Name..."
           label="Search"
@@ -65,7 +65,7 @@ const Search = ({ bills }) => {
           onClick={handleBack}
           sx={{
             backgroundColor: "#0081C9",
-
+            marginLeft: "8px",
             border: `1px solid #0081C9`,
             ":hover": {
               boxShadow: `0px 4px 8px rgba(38, 38, 38, 0.2)`,
@@ -77,6 +77,8 @@ const Search = ({ bills }) => {
         >
           Back
         </Button>
+      </Box>
+      <Box>
         {data.map((bill) => (
           <BillPaper bill={bill} key={bill._id} />
         ))}

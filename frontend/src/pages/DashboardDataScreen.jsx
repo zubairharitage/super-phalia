@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -12,9 +12,9 @@ const DashboardDataScreen = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="sm">
+      <Box sx={{ marginBottom: "50px" }}>
         <Search bills={data} />
-      </Container>
+      </Box>
       <Footer />
     </>
   );
