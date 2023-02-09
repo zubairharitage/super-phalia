@@ -119,11 +119,13 @@ const Home = () => {
             value={invoice.name}
             onChange={handleChange}
             sx={{ margin: "5px", width: "48%" }}
+            required
           />
           <TextField
             placeholder="Enter Invoice Number"
             label="Invoice Number"
             value={billNumber}
+            required
             onChange={(e) => setBillNumber(e.target.value)}
             sx={{ margin: "5px", width: "48%" }}
           />
@@ -149,6 +151,7 @@ const Home = () => {
             name="jobDescription"
             value={invoice.jobDescription}
             onChange={handleChange}
+            required
             sx={{ width: "48%", margin: "5px" }}
           />
           <TextField
@@ -165,6 +168,7 @@ const Home = () => {
             name="tripHours"
             value={invoice.tripHours}
             onChange={handleChange}
+            required
             sx={{ width: "48%", margin: "5px" }}
           />
           <TextField
@@ -173,6 +177,7 @@ const Home = () => {
             name="rate"
             value={invoice.rate}
             onChange={handleChange}
+            required
             sx={{ width: "48%", margin: "5px" }}
           />
           <FormControl sx={{ width: "48%", margin: "5px" }}>

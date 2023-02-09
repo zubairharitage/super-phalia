@@ -11,7 +11,8 @@ const LoginScreen = () => {
   const nevigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { users, error } = useSelector((state) => state.getUser);
+  const { users } = useSelector((state) => state.getUser);
+  const [error, setError] = useState(false);
 
   const [input, setInput] = useState({
     username: "",
@@ -38,6 +39,7 @@ const LoginScreen = () => {
     if (bcrypt.compareSync(input.password, pass)) {
       nevigate("/create");
     }
+    setError(true);
     setInput({
       username: "",
       password: "",
@@ -55,7 +57,7 @@ const LoginScreen = () => {
           height: "400px",
         }}
       >
-        {error && <ErrorMessage error="Username or Password Incorrect" />}
+        {error && <ErrorMessage error="Invalid Username or Password" />}
         <TextField
           label="username"
           placeholder="Enter User Name"

@@ -105,65 +105,71 @@ const Dashboard = ({ bills }) => {
     totalBilForUnPaidYear - discountForUnPaidYear;
 
   return (
-    <Box
-      sx={{
-        margin: "15px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          openTo="year"
-          views={["year", "month"]}
-          label="Year and Month"
-          minDate={dayjs("01-01-2022")}
-          maxDate={dayjs("12-12-2033")}
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} helperText={null} />}
+    <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          margin: "15px",
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+        }}
+      >
+        <Box sx={{ width: "50%" }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              openTo="year"
+              views={["year", "month"]}
+              label="Year and Month"
+              minDate={dayjs("01-01-2022")}
+              maxDate={dayjs("12-12-2033")}
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} helperText={null} />
+              )}
+            />
+          </LocalizationProvider>
+        </Box>
+        <Typography variant="h6" component={"h3"}>
+          Bills of Month {value.$d.toString().slice(4, 8)}
+        </Typography>
+        <DashboardCard
+          data={data}
+          title={{ t1: "Total Bills", t2: "Total Income" }}
+          values={{ v1: data.length, v2: totalAmount }}
         />
-      </LocalizationProvider>
-      <Typography variant="h6" component={"h3"}>
-        Bills of Month {value.$d.toString().slice(4, 8)}
-      </Typography>
-      <DashboardCard
-        data={data}
-        title={{ t1: "Total Bills", t2: "Total Income" }}
-        values={{ v1: data.length, v2: totalAmount }}
-      />
-      <DashboardCard
-        data={dataOfPaid}
-        title={{ t1: "Paid Bills", t2: "Recieved" }}
-        values={{ v1: dataOfPaid.length, v2: totalAmountForPaid }}
-      />
-      <DashboardCard
-        data={dataOfUnPaid}
-        title={{ t1: "UnPaid Bills", t2: "Pending" }}
-        values={{ v1: dataOfUnPaid.length, v2: totalAmountForUnPaid }}
-      />
-      <Typography variant="h6" component={"h3"}>
-        Bills of {value.$y}
-      </Typography>
-      <DashboardCard
-        data={filterByYear}
-        title={{ t1: "Total Bills", t2: "Total Income" }}
-        values={{ v1: filterByYear.length, v2: totalAmountYear }}
-      />
-      <DashboardCard
-        data={dataOfPaidYear}
-        title={{ t1: "Paid Bills", t2: "Recieved" }}
-        values={{ v1: dataOfPaidYear.length, v2: totalAmountForPaidYear }}
-      />
-      <DashboardCard
-        data={dataOfUnPaidYear}
-        title={{ t1: "UnPaid Bills", t2: "Pending" }}
-        values={{ v1: dataOfUnPaidYear.length, v2: totalAmountForUnPaidYear }}
-      />
+        <DashboardCard
+          data={dataOfPaid}
+          title={{ t1: "Paid Bills", t2: "Recieved" }}
+          values={{ v1: dataOfPaid.length, v2: totalAmountForPaid }}
+        />
+        <DashboardCard
+          data={dataOfUnPaid}
+          title={{ t1: "UnPaid Bills", t2: "Pending" }}
+          values={{ v1: dataOfUnPaid.length, v2: totalAmountForUnPaid }}
+        />
+        <Typography variant="h6" component={"h3"}>
+          Bills of Year {value.$y}
+        </Typography>
+        <DashboardCard
+          data={filterByYear}
+          title={{ t1: "Total Bills", t2: "Total Income" }}
+          values={{ v1: filterByYear.length, v2: totalAmountYear }}
+        />
+        <DashboardCard
+          data={dataOfPaidYear}
+          title={{ t1: "Paid Bills", t2: "Recieved" }}
+          values={{ v1: dataOfPaidYear.length, v2: totalAmountForPaidYear }}
+        />
+        <DashboardCard
+          data={dataOfUnPaidYear}
+          title={{ t1: "UnPaid Bills", t2: "Pending" }}
+          values={{ v1: dataOfUnPaidYear.length, v2: totalAmountForUnPaidYear }}
+        />
+      </Box>
+      <Box sx={{ flex: 1 }}></Box>
     </Box>
   );
 };
