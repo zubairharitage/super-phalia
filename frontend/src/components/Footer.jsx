@@ -5,12 +5,12 @@ const Footer = () => {
   return (
     <Box
       style={{
-        position: "fixed",
+        position: "relative",
         width: "100%",
         bottom: 0,
         textAlign: "center",
         marginTop: "15px",
-        padding: "10px 0",
+        padding: "15px 0",
         backgroundColor: "#0081C9",
         color: "white",
       }}

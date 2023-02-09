@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ const EditBill = ({ bill }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const nevigate = useNavigate();
+  const location = useLocation();
 
   const [invoice, setInvoice] = useState({
     invoiceNumber: bill.invoiceNumber,
@@ -48,8 +49,14 @@ const EditBill = ({ bill }) => {
     });
   };
 
+  const dataForUpdate = location.state;
   const handleClick = () => {
     dispatch(billEditAction(id, invoice));
+    dataForUpdate.map((val) =>
+      dispatch(
+        billEditAction(val._id, { tax: invoice.tax, paid: invoice.paid })
+      )
+    );
     nevigate(`/billdetail/${bill._id}`);
   };
   return (
@@ -59,7 +66,7 @@ const EditBill = ({ bill }) => {
           variant="h5"
           sx={{ margin: "10px", fontWeight: "600", textAlign: "center" }}
         >
-          Create Invoice
+          Edit Bill
         </Typography>
         <Box>
           <TextField

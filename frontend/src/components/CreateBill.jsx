@@ -25,8 +25,8 @@ const CreateBill = ({ preBill }) => {
   const [invoice, setInvoice] = useState({
     name: preBill.name,
     invoiceNumber: preBill.invoiceNumber,
-    startingTime: "00:00:00",
-    closingTime: "00:00:00",
+    startingTime: "10:00",
+    closingTime: "11:00",
     jobDescription: "",
     equipmentType: preBill.equipmentType,
     tripHours: "",

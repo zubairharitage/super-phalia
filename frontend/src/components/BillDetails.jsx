@@ -74,8 +74,10 @@ const BillDetails = ({ bill }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const dataForUpdate = bill.filter((val) => val._id !== billl._id);
   const handleEdit = () => {
-    nevigate(`/editbill/${billl._id}`);
+    nevigate(`/editbill/${billl._id}`, { state: dataForUpdate });
   };
 
   return (
