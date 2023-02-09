@@ -6,8 +6,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import DashboardCard from "./DashboardCard";
+import BarChart from "./BarChart";
+import useQuery from "../utils/useMediaQuery";
 
 const Dashboard = ({ bills }) => {
+  const query = useQuery();
   const [value, setValue] = useState(dayjs(new Date()));
 
   const filterByYear = bills.filter((bill) =>
@@ -104,8 +107,48 @@ const Dashboard = ({ bills }) => {
   const totalAmountForUnPaidYear =
     totalBilForUnPaidYear - discountForUnPaidYear;
 
+  // function for getting month names
+  function getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+
+    return date.toLocaleString("en-US", { month: "long" });
+  }
+  const arr = Array(12).fill(0, 0);
+  const monthNames = arr.map((val, index) => getMonthName(index + 1));
+  // Data Month by month
+  const monthData = arr.map((val, index) => {
+    const data1 = filterByYear.filter((bill) => {
+      const mon1 =
+        bill.date.slice(3, 4) === "0" ? `0${index + 1}` : `${index + 1}`;
+      return bill.date.slice(3, 5) === mon1;
+    });
+    const func1 = (sum, bill) => {
+      const b = bill.tripHours * bill.rate;
+      const tax = b * 0.05;
+      const bil = bill.tax === 5 ? b + tax : b;
+      sum += bil;
+      return sum;
+    };
+    const totalBi = data1.reduce(func1, 0);
+    const discountt = data1.reduce((sum, d) => sum + d.discount, 0);
+    const totalAmountt = totalBi - discountt;
+    return totalAmountt;
+  });
+
+  // Chart Data
+  const chartData = {
+    labels: monthNames,
+    datasets: [
+      {
+        label: "Income",
+        data: monthData,
+      },
+    ],
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", flexDirection: query ? "row" : "column" }}>
       <Box
         sx={{
           margin: "15px",
@@ -133,7 +176,7 @@ const Dashboard = ({ bills }) => {
           </LocalizationProvider>
         </Box>
         <Typography variant="h6" component={"h3"}>
-          Bills of Month {value.$d.toString().slice(4, 8)}
+          Bills of Month {getMonthName(value.$M + 1)}
         </Typography>
         <DashboardCard
           data={data}
@@ -169,7 +212,16 @@ const Dashboard = ({ bills }) => {
           values={{ v1: dataOfUnPaidYear.length, v2: totalAmountForUnPaidYear }}
         />
       </Box>
-      <Box sx={{ flex: 1 }}></Box>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <BarChart chartData={chartData} />
+      </Box>
     </Box>
   );
 };

@@ -38,17 +38,30 @@ const BillPaper = ({ bill }) => {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
-          <Typography variant="h6" component="h6">
-            {bill.invoiceNumber}
-          </Typography>
-          <Typography variant="h6" component="h6">
-            {bill.paid ? "Paid" : "Unpaid"}
-          </Typography>
+          <Box flex={1}>
+            <Typography variant="h6" component="h6">
+              {bill.invoiceNumber}
+            </Typography>
+          </Box>
+
+          <Box
+            flex={1}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "end",
+            }}
+          >
+            <Typography variant="h6" component="h6">
+              {bill.date}
+            </Typography>
+            <Typography variant="h6" component="h6">
+              {bill.paid ? "Paid" : "Unpaid"}
+            </Typography>
+          </Box>
         </Box>
         <Typography variant="body">{bill.jobDescription}</Typography>
       </CardContent>
