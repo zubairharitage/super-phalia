@@ -181,17 +181,33 @@ const Dashboard = ({ bills }) => {
         <DashboardCard
           data={data}
           title={{ t1: "Total Bills", t2: "Total Income" }}
-          values={{ v1: data.length, v2: totalAmount }}
+          values={{
+            v1: [...new Map(data.map((b) => [b.invoiceNumber, b])).values()]
+              .length,
+            v2: totalAmount,
+          }}
         />
         <DashboardCard
           data={dataOfPaid}
           title={{ t1: "Paid Bills", t2: "Recieved" }}
-          values={{ v1: dataOfPaid.length, v2: totalAmountForPaid }}
+          values={{
+            v1: [
+              ...new Map(dataOfPaid.map((b) => [b.invoiceNumber, b])).values(),
+            ].length,
+            v2: totalAmountForPaid,
+          }}
         />
         <DashboardCard
           data={dataOfUnPaid}
           title={{ t1: "UnPaid Bills", t2: "Pending" }}
-          values={{ v1: dataOfUnPaid.length, v2: totalAmountForUnPaid }}
+          values={{
+            v1: [
+              ...new Map(
+                dataOfUnPaid.map((b) => [b.invoiceNumber, b])
+              ).values(),
+            ].length,
+            v2: totalAmountForUnPaid,
+          }}
         />
         <Typography variant="h6" component={"h3"}>
           Bills of Year {value.$y}
@@ -199,17 +215,38 @@ const Dashboard = ({ bills }) => {
         <DashboardCard
           data={filterByYear}
           title={{ t1: "Total Bills", t2: "Total Income" }}
-          values={{ v1: filterByYear.length, v2: totalAmountYear }}
+          values={{
+            v1: [
+              ...new Map(
+                filterByYear.map((b) => [b.invoiceNumber, b])
+              ).values(),
+            ].length,
+            v2: totalAmountYear,
+          }}
         />
         <DashboardCard
           data={dataOfPaidYear}
           title={{ t1: "Paid Bills", t2: "Recieved" }}
-          values={{ v1: dataOfPaidYear.length, v2: totalAmountForPaidYear }}
+          values={{
+            v1: [
+              ...new Map(
+                dataOfPaidYear.map((b) => [b.invoiceNumber, b])
+              ).values(),
+            ].length,
+            v2: totalAmountForPaidYear,
+          }}
         />
         <DashboardCard
           data={dataOfUnPaidYear}
           title={{ t1: "UnPaid Bills", t2: "Pending" }}
-          values={{ v1: dataOfUnPaidYear.length, v2: totalAmountForUnPaidYear }}
+          values={{
+            v1: [
+              ...new Map(
+                dataOfUnPaidYear.map((b) => [b.invoiceNumber, b])
+              ).values(),
+            ].length,
+            v2: totalAmountForUnPaidYear,
+          }}
         />
       </Box>
       <Box

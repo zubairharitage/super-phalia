@@ -9,11 +9,12 @@ import Search from "../components/Search";
 const DashboardDataScreen = () => {
   const location = useLocation();
   const data = location.state;
+  const bill = [...new Map(data.map((b) => [b.invoiceNumber, b])).values()];
   return (
     <>
       <Header />
       <Box sx={{ marginBottom: "50px" }}>
-        <Search bills={data} />
+        <Search bills={bill} />
       </Box>
       <Footer />
     </>

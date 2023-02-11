@@ -16,7 +16,7 @@ const BillPaper = ({ bill }) => {
       onClick={handleView}
       sx={{
         margin: "10px",
-        width: query ? "23%" : "100%",
+        width: query ? "23%" : "90%",
         backgroundColor: "#0081C9",
         color: "white",
         cursor: "pointer",
@@ -63,7 +63,6 @@ const BillPaper = ({ bill }) => {
             </Typography>
           </Box>
         </Box>
-        <Typography variant="body">{bill.jobDescription}</Typography>
       </CardContent>
     </Card>
   );

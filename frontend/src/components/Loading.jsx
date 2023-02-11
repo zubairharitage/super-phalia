@@ -1,11 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { ClipLoader } from "react-spinners";
 
 const Loading = () => {
   return (
     <Box sx={{ textAlign: "center", marginTop: "20px" }}>
-      <ClipLoader />
+      <img style={{ width: "100px" }} src="/gif.gif" alt="Loading..." />
     </Box>
   );
 };

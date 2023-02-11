@@ -36,7 +36,7 @@ const CreateBill = ({ preBill }) => {
     left: 0,
     discount: 0,
     date: preBill.date,
-    paid: true,
+    paid: preBill.paid,
   });
 
   const handleChange = (e) => {
