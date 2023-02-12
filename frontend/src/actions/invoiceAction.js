@@ -25,7 +25,9 @@ export const getAllBillsAction = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_BILL_REQUEST });
 
-    const { data } = await axios.get("/phalia/api/v1/bills");
+    const { data } = await axios.get(
+      "http://109.106.255.158/api/phalia/api/v1/bills"
+    );
     dispatch({
       type: ALL_BILL_SUCCESS,
       payload: data,
@@ -42,7 +44,9 @@ export const getUserAction = () => async (dispatch) => {
   try {
     dispatch({ type: GET_USER_REQUEST });
 
-    const { data } = await axios.get("/phalia/userapi/v1/user/get");
+    const { data } = await axios.get(
+      "http://109.106.255.158/api/phalia/userapi/v1/user/get"
+    );
     dispatch({
       type: GET_USER_SUCCESS,
       payload: data,
@@ -59,7 +63,10 @@ export const createBillAction = (bill) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_BILL_REQUEST });
 
-    const { data } = await axios.post("/phalia/api/v1/bill/new", bill);
+    const { data } = await axios.post(
+      "http://109.106.255.158/api/phalia/api/v1/bill/new",
+      bill
+    );
     dispatch({
       type: CREATE_BILL_SUCCESS,
       payload: data,
@@ -76,7 +83,9 @@ export const deleteBillAction = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_BILL_REQUEST });
 
-    const { data } = await axios.delete(`/phalia/api/v1/bill/${id}`);
+    const { data } = await axios.delete(
+      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`
+    );
     dispatch({
       type: DELETE_BILL_SUCCESS,
       payload: data,
@@ -93,7 +102,9 @@ export const billDetailAction = (id) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_BILL_REQUEST });
 
-    const { data } = await axios.get(`/phalia/api/v1/bill/${id}`);
+    const { data } = await axios.get(
+      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`
+    );
     dispatch({
       type: DETAIL_BILL_SUCCESS,
       payload: data,
@@ -110,7 +121,10 @@ export const billEditAction = (id, bill) => async (dispatch) => {
   try {
     dispatch({ type: EDIT_BILL_REQUEST });
 
-    const { data } = await axios.put(`/phalia/api/v1/bill/${id}`, bill);
+    const { data } = await axios.put(
+      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`,
+      bill
+    );
     dispatch({
       type: EDIT_BILL_SUCCESS,
       payload: data,
