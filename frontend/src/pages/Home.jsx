@@ -235,8 +235,8 @@ const Home = () => {
           </FormControl>
           {!invoice.paid ? (
             <TextField
-              placeholder="Enter how much Left"
-              label="Left"
+              placeholder="Enter how much pending"
+              label="Pending"
               name="left"
               value={invoice.left}
               onChange={handleChange}

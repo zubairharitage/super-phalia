@@ -59,9 +59,23 @@ const EditBill = ({ bill }) => {
     );
     nevigate(`/billdetail/${bill._id}`);
   };
+  const handleBack = () => {
+    nevigate(-1);
+  };
   return (
     <>
       <Container maxWidth="sm" sx={{ marginBottom: "50px" }}>
+        <Button
+          variant="contained"
+          onClick={handleBack}
+          sx={{
+            margin: "5px",
+            backgroundColor: "#0081C9",
+            ":hover": { backgroundColor: "#05a5fb" },
+          }}
+        >
+          Back
+        </Button>
         <Typography
           variant="h5"
           sx={{ margin: "10px", fontWeight: "600", textAlign: "center" }}

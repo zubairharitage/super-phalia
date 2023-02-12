@@ -79,9 +79,23 @@ const BillDetails = ({ bill }) => {
   const handleEdit = () => {
     nevigate(`/editbill/${billl._id}`, { state: dataForUpdate });
   };
+  const handleBack = () => {
+    nevigate(-1);
+  };
 
   return (
     <Box>
+      <Button
+        variant="contained"
+        onClick={handleBack}
+        sx={{
+          margin: "5px",
+          backgroundColor: "#0081C9",
+          ":hover": { backgroundColor: "#05a5fb" },
+        }}
+      >
+        Back
+      </Button>
       <Paper
         sx={{
           display: "flex",
@@ -236,7 +250,8 @@ const BillDetails = ({ bill }) => {
                 color: "black",
               }}
             >
-              TRN: 100594171900003
+              TRN: 100594171900003 &nbsp;&nbsp;&nbsp;&nbsp;
+              {billl.trn === 0 ? "" : `Customer TRN: ${billl.trn}`}
             </Typography>
           </Box>
         </Box>
@@ -312,15 +327,20 @@ const BillDetails = ({ bill }) => {
               sx={{ backgroundColor: "#0081C9", border: "2px solid #0081C9" }}
             >
               <TableRow sx={{ border: "2px solid #0081C9" }}>
-                <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
+                <TableCell
+                  sx={{
+                    color: "white",
+                    border: "2px solid #0081C9",
+                  }}
+                >
                   Starting Time
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
                   Closing Time
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Job
-                  Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Job
+                  Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </TableCell>
                 <TableCell sx={{ color: "white", border: "2px solid #0081C9" }}>
                   Trip Hours
@@ -420,8 +440,12 @@ const BillDetails = ({ bill }) => {
             borderBottom: "2px solid #0081C9",
           }}
         >
-          <Typography>Discount</Typography>
-          <Typography sx={{ color: "black" }}>{discount}</Typography>
+          <Typography>
+            {discount === 0 ? "" : "Discount"} &nbsp;&nbsp;&nbsp;
+          </Typography>
+          <Typography sx={{ color: "black" }}>
+            {discount === 0 ? "" : discount}
+          </Typography>
         </Box>
         <Box
           sx={{

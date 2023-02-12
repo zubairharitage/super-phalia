@@ -37,7 +37,7 @@ const invoiceSchema = new mongoose.Schema({
     default: 0,
   },
   trn: {
-    type: Number,
+    type: String,
   },
   left: {
     type: Number,
