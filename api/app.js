@@ -9,7 +9,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/phalia/api/v1", route);
-app.use("/phalia/userapi/v1", userRoute);
+app.use("/api/v1", route);
+app.use("/api/v1", userRoute);
 
 export default app;
