@@ -25,9 +25,7 @@ export const getAllBillsAction = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_BILL_REQUEST });
 
-    const { data } = await axios.get(
-      "http://109.106.255.158/api/phalia/api/v1/bills"
-    );
+    const { data } = await axios.get("http://109.106.255.158/api/v1/bills");
     dispatch({
       type: ALL_BILL_SUCCESS,
       payload: data,
@@ -44,9 +42,7 @@ export const getUserAction = () => async (dispatch) => {
   try {
     dispatch({ type: GET_USER_REQUEST });
 
-    const { data } = await axios.get(
-      "http://109.106.255.158/api/phalia/userapi/v1/user/get"
-    );
+    const { data } = await axios.get("http://109.106.255.158/api/v1/user/get");
     dispatch({
       type: GET_USER_SUCCESS,
       payload: data,
@@ -64,7 +60,7 @@ export const createBillAction = (bill) => async (dispatch) => {
     dispatch({ type: CREATE_BILL_REQUEST });
 
     const { data } = await axios.post(
-      "http://109.106.255.158/api/phalia/api/v1/bill/new",
+      "http://109.106.255.158/api/v1/bill/new",
       bill
     );
     dispatch({
@@ -84,7 +80,7 @@ export const deleteBillAction = (id) => async (dispatch) => {
     dispatch({ type: DELETE_BILL_REQUEST });
 
     const { data } = await axios.delete(
-      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`
+      `http://109.106.255.158/api/v1/bill/${id}`
     );
     dispatch({
       type: DELETE_BILL_SUCCESS,
@@ -103,7 +99,7 @@ export const billDetailAction = (id) => async (dispatch) => {
     dispatch({ type: DETAIL_BILL_REQUEST });
 
     const { data } = await axios.get(
-      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`
+      `http://109.106.255.158/api/v1/bill/${id}`
     );
     dispatch({
       type: DETAIL_BILL_SUCCESS,
@@ -122,7 +118,7 @@ export const billEditAction = (id, bill) => async (dispatch) => {
     dispatch({ type: EDIT_BILL_REQUEST });
 
     const { data } = await axios.put(
-      `http://109.106.255.158/api/phalia/api/v1/bill/${id}`,
+      `http://109.106.255.158/api/v1/bill/${id}`,
       bill
     );
     dispatch({
