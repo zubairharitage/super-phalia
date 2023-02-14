@@ -38,6 +38,7 @@ const LoginScreen = () => {
     const pass = user.length !== 0 ? user[0].password : "";
     if (bcrypt.compareSync(input.password, pass)) {
       nevigate("/create");
+      localStorage.setItem("isLoged", "login");
     }
     setError(true);
     setInput({
