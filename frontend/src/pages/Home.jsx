@@ -17,10 +17,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { createBillAction, getAllBillsAction } from "../actions/invoiceAction";
 import ErrorMessage from "../components/ErrorMessage";
+import useQuery from "../utils/useMediaQuery";
 
 const Home = () => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
+  const query = useQuery();
   const { error, bill } = useSelector((state) => state.createInvoice);
   const { bills } = useSelector((state) => state.invoices);
 
@@ -118,7 +120,7 @@ const Home = () => {
             name="name"
             value={invoice.name}
             onChange={handleChange}
-            sx={{ margin: "5px", width: "48%" }}
+            sx={{ margin: "5px", width: query ? "48%" : "96%" }}
             required
           />
           <TextField
@@ -127,7 +129,7 @@ const Home = () => {
             value={billNumber}
             required
             onChange={(e) => setBillNumber(e.target.value)}
-            sx={{ margin: "5px", width: "48%" }}
+            sx={{ margin: "5px", width: query ? "48%" : "96%" }}
           />
           <TextField
             label="Starting time"
@@ -135,7 +137,7 @@ const Home = () => {
             name="startingTime"
             value={invoice.startingTime}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             label="Closing time"
@@ -143,7 +145,7 @@ const Home = () => {
             name="closingTime"
             value={invoice.closingTime}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             placeholder="Enter Job Description"
@@ -152,7 +154,7 @@ const Home = () => {
             value={invoice.jobDescription}
             onChange={handleChange}
             required
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             placeholder="Enter Equipment Type"
@@ -160,7 +162,7 @@ const Home = () => {
             name="equipmentType"
             value={invoice.equipmentType}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             placeholder="Enter Trip Hours"
@@ -169,7 +171,7 @@ const Home = () => {
             value={invoice.tripHours}
             onChange={handleChange}
             required
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             placeholder="Enter Rate"
@@ -178,9 +180,9 @@ const Home = () => {
             value={invoice.rate}
             onChange={handleChange}
             required
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
-          <FormControl sx={{ width: "48%", margin: "5px" }}>
+          <FormControl sx={{ width: query ? "48%" : "96%", margin: "5px" }}>
             <InputLabel id="simple-select-label">Tax</InputLabel>
             <Select
               labelId="simple-select-label"
@@ -200,7 +202,7 @@ const Home = () => {
             name="trn"
             value={invoice.trn}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
 
           <TextField
@@ -209,7 +211,7 @@ const Home = () => {
             name="discount"
             value={invoice.discount}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
           <TextField
             placeholder="Enter Date"
@@ -217,9 +219,9 @@ const Home = () => {
             name="date"
             value={invoice.date}
             onChange={handleChange}
-            sx={{ width: "48%", margin: "5px" }}
+            sx={{ width: query ? "48%" : "96%", margin: "5px" }}
           />
-          <FormControl sx={{ width: "48%", margin: "5px" }}>
+          <FormControl sx={{ width: query ? "48%" : "96%", margin: "5px" }}>
             <InputLabel id="demo-simple-select-label">Bill</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -240,7 +242,7 @@ const Home = () => {
               name="left"
               value={invoice.left}
               onChange={handleChange}
-              sx={{ width: "48%", margin: "5px" }}
+              sx={{ width: query ? "48%" : "96%", margin: "5px" }}
             />
           ) : (
             <Box></Box>
@@ -249,7 +251,7 @@ const Home = () => {
             variant="contained"
             onClick={handleClick}
             sx={{
-              width: "48%",
+              width: query ? "48%" : "96%",
               margin: "5px",
               backgroundColor: "#0081C9",
               ":hover": { backgroundColor: "#05a5fb" },
@@ -262,7 +264,7 @@ const Home = () => {
               variant="outlined"
               onClick={handleShow}
               sx={{
-                width: "48%",
+                width: query ? "48%" : "96%",
                 margin: "5px",
                 ":hover": { backgroundColor: "#05a5fb", color: "white" },
               }}

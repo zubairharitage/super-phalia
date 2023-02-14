@@ -395,8 +395,7 @@ const BillDetails = ({ bill }) => {
           >
             Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
             quidem dignissimos fugiat perspiciatis tempora minima libero animi
-            illum similique. Labore non cum velit laboriosam pariatur iure!
-            Voluptate placeat nisi labore?
+            illum similique.
           </Typography>
         </Box>
       </Box>

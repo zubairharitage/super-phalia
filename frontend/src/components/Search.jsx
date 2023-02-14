@@ -3,9 +3,11 @@ import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import BillPaper from "./BillPaper";
 import { useNavigate } from "react-router-dom";
+import useQuery from "../utils/useMediaQuery";
 
 const Search = ({ bills }) => {
   const nevigate = useNavigate();
+  const query = useQuery();
   const [searchName, setSearchName] = useState("");
   const [searchInvoice, setSearchInvoice] = useState("");
 
@@ -27,7 +29,7 @@ const Search = ({ bills }) => {
 
   return (
     <>
-      <Box sx={{ width: "50%" }}>
+      <Box sx={{ width: "60%" }}>
         <TextField
           placeholder="Name..."
           label="Search"
@@ -42,7 +44,7 @@ const Search = ({ bills }) => {
           size="small"
           value={searchName}
           onChange={handleChangeName}
-          sx={{ margin: "10px", width: "46%" }}
+          sx={{ margin: "10px", width: query ? "46%" : "96%" }}
         />
         <TextField
           placeholder="Invoice number..."
@@ -58,7 +60,7 @@ const Search = ({ bills }) => {
           size="small"
           value={searchInvoice}
           onChange={handleChangeNumber}
-          sx={{ margin: "10px", width: "46%" }}
+          sx={{ margin: "10px", width: query ? "46%" : "96%" }}
         />
         <Button
           variant="contained"

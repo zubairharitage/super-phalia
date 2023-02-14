@@ -17,6 +17,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
+import { useReactToPrint } from "react-to-print";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -32,6 +33,7 @@ const BillDetails = ({ bill }) => {
 
   const billl = bill[0];
   const [open, setOpen] = useState(false);
+  const [openPrint, setOpenPrint] = useState(false);
 
   const arrayForBoxes = [1, 2, 3, 4, 5, 6];
   bill.forEach(() => arrayForBoxes.pop());
@@ -63,16 +65,26 @@ const BillDetails = ({ bill }) => {
   const handleAddBill = () => {
     nevigate(`/addbill/${billl._id}`);
   };
-  const handlePrint = () => {
+  const handlePrintBlack = () => {
     nevigate(`/printbill/${billl._id}`);
   };
+  const handlePrint = useReactToPrint({
+    content: () => conponentRef.current,
+    documentTitle: `${billl.name}-${billl.invoiceNumber}`,
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleClickOpenPrint = () => {
+    setOpenPrint(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleClosePrint = () => {
+    setOpenPrint(false);
   };
 
   const dataForUpdate = bill.filter((val) => val._id !== billl._id);
@@ -133,7 +145,7 @@ const BillDetails = ({ bill }) => {
         <Button
           variant="contained"
           startIcon={<PrintIcon />}
-          onClick={handlePrint}
+          onClick={handleClickOpenPrint}
           sx={{
             backgroundColor: "#0081C9",
             mr: "2px",
@@ -142,6 +154,43 @@ const BillDetails = ({ bill }) => {
         >
           Print Bill
         </Button>
+        <Dialog
+          open={openPrint}
+          onClose={handleClosePrint}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Print</DialogTitle>
+          <DialogContent>
+            <Button
+              variant="contained"
+              startIcon={<PrintIcon />}
+              onClick={handlePrintBlack}
+              sx={{
+                backgroundColor: "#0081C9",
+                mr: "2px",
+                ":hover": { backgroundColor: "#05a5fb" },
+              }}
+            >
+              Print Black
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<PrintIcon />}
+              onClick={handlePrint}
+              sx={{
+                backgroundColor: "#0081C9",
+                mr: "2px",
+                ":hover": { backgroundColor: "#05a5fb" },
+              }}
+            >
+              Print Colorfull
+            </Button>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClosePrint}>Close</Button>
+          </DialogActions>
+        </Dialog>
         <Button
           variant="contained"
           startIcon={<DeleteIcon />}
@@ -540,8 +589,7 @@ const BillDetails = ({ bill }) => {
           >
             Note: Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
             quidem dignissimos fugiat perspiciatis tempora minima libero animi
-            illum similique. Labore non cum velit laboriosam pariatur iure!
-            Voluptate placeat nisi labore?
+            illum similique.
           </Typography>
         </Box>
       </Box>
